@@ -1,0 +1,695 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Wild Shape — Lute</title>
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&family=IM+Fell+English:ital@0;1&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --parchment:      #f0e2b8;
+      --parchment-light:#f9f0d6;
+      --parchment-dark: #c9a96e;
+      --ink:            #1c0e06;
+      --ink-mid:        #3d200e;
+      --crimson:        #7c1c1c;
+      --crimson-dark:   #5a1010;
+      --border:         #7a4820;
+      --border-light:   #a07040;
+      --green:          #2e5c14;
+      --green-light:    #4a7a28;
+      --green-bg:       rgba(34,80,34,0.08);
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      background: #1a0d05;
+      font-family: 'IM Fell English', Georgia, serif;
+      color: var(--ink);
+      min-height: 100vh;
+      padding: 1.5rem 0.75rem;
+    }
+
+    .page {
+      max-width: 680px;
+      margin: 0 auto;
+      background: var(--parchment);
+      background-image: linear-gradient(160deg, #f8edcc 0%, #e8d4a4 30%, #f3e7c0 60%, #dfc99a 100%);
+      border: 1.5px solid var(--border);
+      box-shadow: 0 0 0 5px var(--parchment-dark), 0 0 0 7px var(--border), 0 20px 60px rgba(0,0,0,0.7);
+      padding: 1.5rem 1.25rem;
+    }
+
+    /* ── HEADER ── */
+    .page-title {
+      font-family: 'Cinzel', serif;
+      font-size: 1.4rem;
+      font-weight: 700;
+      color: var(--green);
+      text-align: center;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+    }
+    .page-sub {
+      font-family: 'Cinzel', serif;
+      font-size: 0.6rem;
+      color: var(--ink-mid);
+      text-align: center;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      margin-top: 3px;
+    }
+
+    .divider {
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+      margin: 0.75rem 0;
+    }
+    .divider-line {
+      flex: 1;
+      height: 1.5px;
+      background: linear-gradient(to right, transparent, var(--border) 20%, var(--border) 80%, transparent);
+    }
+    .divider-orn { color: var(--green-light); font-size: 0.9rem; flex-shrink: 0; }
+
+    /* ── USES TRACKER ── */
+    .uses-box {
+      background: var(--green-bg);
+      border: 1.5px solid var(--green-light);
+      border-radius: 4px;
+      padding: 0.75rem 1rem;
+      margin-bottom: 0.75rem;
+    }
+    .uses-title {
+      font-family: 'Cinzel', serif;
+      font-size: 0.65rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.14em;
+      color: var(--green);
+      margin-bottom: 0.5rem;
+    }
+    .uses-row {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      flex-wrap: wrap;
+    }
+    .use-dot {
+      width: 36px;
+      height: 36px;
+      border: 2.5px solid var(--green-light);
+      border-radius: 50%;
+      cursor: pointer;
+      transition: background 0.15s;
+      flex-shrink: 0;
+    }
+    .use-dot:hover { background: rgba(46,92,20,0.2); }
+    .use-dot.used { background: var(--green); border-color: var(--green); }
+    .uses-note {
+      font-size: 0.7rem;
+      color: var(--ink-mid);
+      font-style: italic;
+      line-height: 1.5;
+    }
+
+    /* ── RULES SECTION ── */
+    .rules-box {
+      border: 1.5px solid var(--border);
+      border-radius: 4px;
+      background: rgba(255,255,255,0.1);
+      padding: 0.75rem 1rem;
+      margin-bottom: 0.75rem;
+    }
+    .section-title {
+      font-family: 'Cinzel', serif;
+      font-size: 0.62rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.14em;
+      color: var(--crimson-dark);
+      border-bottom: 1px solid var(--border-light);
+      padding-bottom: 4px;
+      margin-bottom: 0.6rem;
+      text-align: center;
+    }
+    .rule-item {
+      display: flex;
+      gap: 0.5rem;
+      margin-bottom: 0.45rem;
+      font-size: 0.78rem;
+      line-height: 1.5;
+    }
+    .rule-item:last-child { margin-bottom: 0; }
+    .rule-icon {
+      flex-shrink: 0;
+      font-style: normal;
+      color: var(--green-light);
+      width: 1.1em;
+      text-align: center;
+    }
+    .rule-label {
+      font-family: 'Cinzel', serif;
+      font-size: 0.58rem;
+      font-weight: 700;
+      color: var(--crimson);
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      display: block;
+      margin-bottom: 1px;
+    }
+
+    /* ── COMBAT WILD SHAPE ── */
+    .cws-box {
+      background: rgba(122,27,27,0.06);
+      border: 1.5px solid var(--crimson);
+      border-radius: 4px;
+      padding: 0.65rem 0.9rem;
+      margin-bottom: 0.75rem;
+    }
+    .cws-title {
+      font-family: 'Cinzel', serif;
+      font-size: 0.62rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.14em;
+      color: var(--crimson);
+      margin-bottom: 0.5rem;
+    }
+    .cws-text { font-size: 0.78rem; line-height: 1.55; }
+    .dice-tag {
+      display: inline-block;
+      font-family: 'Cinzel', serif;
+      font-size: 0.65rem;
+      font-weight: 700;
+      background: rgba(122,27,27,0.12);
+      border: 1px solid var(--crimson);
+      border-radius: 3px;
+      padding: 0px 5px;
+      color: var(--crimson);
+    }
+
+    /* ── BEAST CARDS ── */
+    .beast-card {
+      border: 2px solid var(--green-light);
+      border-radius: 5px;
+      background: var(--green-bg);
+      padding: 0.9rem 1rem;
+      margin-bottom: 0.75rem;
+      position: relative;
+    }
+    .beast-card:last-child { margin-bottom: 0; }
+
+    .beast-header {
+      display: flex;
+      align-items: baseline;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 0.4rem;
+      margin-bottom: 0.5rem;
+    }
+    .beast-name {
+      font-family: 'Cinzel', serif;
+      font-size: 1.05rem;
+      font-weight: 700;
+      color: var(--green);
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+    }
+    .beast-cr {
+      font-family: 'Cinzel', serif;
+      font-size: 0.55rem;
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      color: var(--green-light);
+      border: 1px solid var(--green-light);
+      border-radius: 2px;
+      padding: 1px 6px;
+    }
+
+    .beast-rule {
+      height: 1px;
+      background: linear-gradient(to right, var(--green-light), rgba(74,122,40,0.1));
+      margin-bottom: 0.55rem;
+    }
+
+    /* stat strip */
+    .stat-strip {
+      display: flex;
+      gap: 0.5rem;
+      flex-wrap: wrap;
+      margin-bottom: 0.6rem;
+    }
+    .stat-pill {
+      background: rgba(255,255,255,0.35);
+      border: 1px solid var(--border-light);
+      border-radius: 3px;
+      padding: 3px 8px;
+      text-align: center;
+      min-width: 54px;
+    }
+    .stat-pill-val {
+      font-family: 'Cinzel', serif;
+      font-size: 0.95rem;
+      font-weight: 700;
+      color: var(--ink);
+      line-height: 1.1;
+    }
+    .stat-pill-val.highlight { color: var(--green); }
+    .stat-pill-lbl {
+      font-family: 'Cinzel', serif;
+      font-size: 0.42rem;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: var(--crimson);
+      margin-top: 1px;
+    }
+
+    /* attacks */
+    .atk-section-title {
+      font-family: 'Cinzel', serif;
+      font-size: 0.55rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.13em;
+      color: var(--crimson-dark);
+      margin-bottom: 0.35rem;
+    }
+
+    .atk-block {
+      background: rgba(255,255,255,0.25);
+      border: 1px solid var(--border-light);
+      border-radius: 3px;
+      padding: 0.5rem 0.65rem;
+      margin-bottom: 0.4rem;
+    }
+    .atk-block:last-of-type { margin-bottom: 0.5rem; }
+
+    .atk-name-row {
+      display: flex;
+      align-items: baseline;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 0.3rem;
+      margin-bottom: 0.25rem;
+    }
+    .atk-name {
+      font-family: 'Cinzel', serif;
+      font-size: 0.72rem;
+      font-weight: 700;
+      color: var(--ink);
+      text-transform: uppercase;
+      letter-spacing: 0.07em;
+    }
+    .atk-tag {
+      font-family: 'Cinzel', serif;
+      font-size: 0.48rem;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: var(--ink-mid);
+    }
+
+    .atk-dice-row {
+      display: flex;
+      gap: 0.5rem;
+      flex-wrap: wrap;
+      margin-bottom: 0.25rem;
+    }
+    .atk-dice-block {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      background: rgba(122,27,27,0.07);
+      border: 1px solid rgba(122,27,27,0.25);
+      border-radius: 3px;
+      padding: 3px 10px;
+    }
+    .atk-dice-num {
+      font-family: 'Cinzel', serif;
+      font-size: 1rem;
+      font-weight: 700;
+      color: var(--crimson);
+      line-height: 1.1;
+    }
+    .atk-dice-lbl {
+      font-family: 'Cinzel', serif;
+      font-size: 0.42rem;
+      text-transform: uppercase;
+      letter-spacing: 0.09em;
+      color: var(--ink-mid);
+    }
+
+    .atk-explain {
+      font-size: 0.7rem;
+      color: var(--ink-mid);
+      font-style: italic;
+      line-height: 1.45;
+    }
+
+    /* special abilities */
+    .special-title {
+      font-family: 'Cinzel', serif;
+      font-size: 0.55rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.13em;
+      color: var(--crimson-dark);
+      margin: 0.5rem 0 0.3rem;
+    }
+    .special-item {
+      font-size: 0.75rem;
+      line-height: 1.5;
+      margin-bottom: 0.3rem;
+      padding-left: 0.8rem;
+      position: relative;
+    }
+    .special-item::before {
+      content: '▸';
+      position: absolute;
+      left: 0;
+      color: var(--green-light);
+      font-size: 0.6rem;
+      top: 2px;
+    }
+    .special-item strong {
+      font-family: 'Cinzel', serif;
+      font-size: 0.62rem;
+      font-weight: 700;
+      color: var(--green);
+      font-style: normal;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+
+    /* nav */
+    .nav-bar {
+      display: flex;
+      justify-content: center;
+      gap: 1rem;
+      margin-top: 1rem;
+    }
+    .nav-link {
+      font-family: 'Cinzel', serif;
+      font-size: 0.58rem;
+      text-transform: uppercase;
+      letter-spacing: 0.14em;
+      color: var(--crimson);
+      text-decoration: none;
+    }
+    .nav-link:hover { text-decoration: underline; }
+
+    /* mobile */
+    @media (max-width: 480px) {
+      body { padding: 0.5rem 0.25rem; }
+      .page { padding: 1rem 0.85rem; }
+      .beast-name { font-size: 0.9rem; }
+      .stat-strip { gap: 0.35rem; }
+      .stat-pill { min-width: 46px; padding: 3px 5px; }
+    }
+  </style>
+</head>
+<body>
+<div class="page">
+
+  <div class="page-title">&#9680; Wild Shape</div>
+  <div class="page-sub">Lute &nbsp;&middot;&nbsp; Druid 2 &nbsp;&middot;&nbsp; Circle of the Moon</div>
+
+  <div class="divider">
+    <div class="divider-line"></div>
+    <span class="divider-orn">&#10022;</span>
+    <div class="divider-line"></div>
+  </div>
+
+  <!-- ── USES TRACKER ── -->
+  <div class="uses-box">
+    <div class="uses-title">Uses &mdash; resets on short or long rest</div>
+    <div class="uses-row">
+      <div class="use-dot" title="Use 1"></div>
+      <div class="use-dot" title="Use 2"></div>
+      <div class="uses-note">2 uses per short rest. Tap a circle to mark it used.<br>Both reset when you take a short or long rest.</div>
+    </div>
+  </div>
+
+  <!-- ── HOW IT WORKS ── -->
+  <div class="rules-box">
+    <div class="section-title">How Wild Shape Works</div>
+
+    <div class="rule-item">
+      <span class="rule-icon">&#9654;</span>
+      <div>
+        <span class="rule-label">Activate</span>
+        Use your <strong>bonus action</strong> to transform (Circle of the Moon feature). You pick which beast form to take.
+      </div>
+    </div>
+
+    <div class="rule-item">
+      <span class="rule-icon">&#9654;</span>
+      <div>
+        <span class="rule-label">Your HP becomes the beast&rsquo;s HP</span>
+        While transformed you use the beast&rsquo;s hit points. If those drop to 0 you revert back to your normal form with whatever HP you had before transforming. You do <em>not</em> take the leftover damage.
+      </div>
+    </div>
+
+    <div class="rule-item">
+      <span class="rule-icon">&#9654;</span>
+      <div>
+        <span class="rule-label">Your stats become the beast&rsquo;s stats</span>
+        You use the beast&rsquo;s STR, DEX, CON, AC, speed, and attacks. You keep your own WIS, INT, CHA and your proficiency bonus. You keep your own personality and memories.
+      </div>
+    </div>
+
+    <div class="rule-item">
+      <span class="rule-icon">&#9654;</span>
+      <div>
+        <span class="rule-label">No spellcasting</span>
+        You can&rsquo;t cast spells while in beast form. If you were concentrating on a spell before transforming, you can keep concentrating on it.
+      </div>
+    </div>
+
+    <div class="rule-item">
+      <span class="rule-icon">&#9654;</span>
+      <div>
+        <span class="rule-label">Your gear merges or drops</span>
+        Equipment either merges into the beast form or drops to the ground &mdash; your DM decides. Magic items generally stop functioning while merged.
+      </div>
+    </div>
+
+    <div class="rule-item">
+      <span class="rule-icon">&#9654;</span>
+      <div>
+        <span class="rule-label">Ending the form</span>
+        You can revert back at any time, no action needed. You also revert if you fall unconscious or the beast&rsquo;s HP drops to 0.
+      </div>
+    </div>
+
+    <div class="rule-item">
+      <span class="rule-icon">&#9654;</span>
+      <div>
+        <span class="rule-label">Limits</span>
+        Max beast CR: <strong>1</strong>. No flying speed. No swimming speed (unlocks at druid level 4).
+      </div>
+    </div>
+  </div>
+
+  <!-- ── COMBAT WILD SHAPE ── -->
+  <div class="cws-box">
+    <div class="cws-title">&#9876; Combat Wild Shape &mdash; Circle of the Moon</div>
+    <div class="cws-text">
+      While you are transformed, you can use a <strong>bonus action</strong> to expend one of your druid spell slots and recover hit points.<br><br>
+      Roll <span class="dice-tag">1d8</span> for every level of the spell slot you expend, then add that many HP to your current beast form HP.<br><br>
+      <em>Example: expend a 1st-level slot &rarr; roll 1d8, heal that many HP. Can&rsquo;t go above the beast&rsquo;s maximum HP.</em>
+    </div>
+  </div>
+
+  <div class="divider">
+    <div class="divider-line"></div>
+    <span class="divider-orn">&#9884;</span>
+    <div class="divider-line"></div>
+  </div>
+
+  <!-- ══ BEAST: GIANT HYENA ══ -->
+  <div class="beast-card">
+    <div class="beast-header">
+      <span class="beast-name">Giant Hyena</span>
+      <span class="beast-cr">CR 1 &nbsp;&middot;&nbsp; Large Beast</span>
+    </div>
+    <div class="beast-rule"></div>
+
+    <div class="stat-strip">
+      <div class="stat-pill">
+        <div class="stat-pill-val highlight">45</div>
+        <div class="stat-pill-lbl">HP</div>
+      </div>
+      <div class="stat-pill">
+        <div class="stat-pill-val">12</div>
+        <div class="stat-pill-lbl">AC</div>
+      </div>
+      <div class="stat-pill">
+        <div class="stat-pill-val">50 ft</div>
+        <div class="stat-pill-lbl">Speed</div>
+      </div>
+      <div class="stat-pill">
+        <div class="stat-pill-val">+3</div>
+        <div class="stat-pill-lbl">STR mod</div>
+      </div>
+      <div class="stat-pill">
+        <div class="stat-pill-val">+3</div>
+        <div class="stat-pill-lbl">Perception</div>
+      </div>
+    </div>
+
+    <div class="atk-section-title">Attack</div>
+
+    <div class="atk-block">
+      <div class="atk-name-row">
+        <span class="atk-name">Bite</span>
+        <span class="atk-tag">Melee &nbsp;&middot;&nbsp; Reach 5 ft &nbsp;&middot;&nbsp; One target</span>
+      </div>
+      <div class="atk-dice-row">
+        <div class="atk-dice-block">
+          <div class="atk-dice-num">+5</div>
+          <div class="atk-dice-lbl">To Hit</div>
+        </div>
+        <div class="atk-dice-block">
+          <div class="atk-dice-num">2d6+3</div>
+          <div class="atk-dice-lbl">Piercing</div>
+        </div>
+      </div>
+      <div class="atk-explain">
+        Roll a d20 and add <strong>+5</strong>. If it meets or beats their AC, roll <strong>2 six-sided dice</strong>, add them together, then add <strong>3</strong>. That&rsquo;s your damage. Average damage is 10.
+      </div>
+    </div>
+
+    <div class="special-title">Special Ability</div>
+    <div class="special-item">
+      <strong>Rampage</strong> — When you reduce a creature to 0 HP with a melee attack, you can use your <strong>bonus action</strong> to move up to half your speed (25 ft) and make one more Bite attack against a different creature. Great for when there are multiple enemies.
+    </div>
+  </div>
+
+  <!-- ══ BEAST: APE ══ -->
+  <div class="beast-card">
+    <div class="beast-header">
+      <span class="beast-name">Ape</span>
+      <span class="beast-cr">CR &frac12; &nbsp;&middot;&nbsp; Medium Beast</span>
+    </div>
+    <div class="beast-rule"></div>
+
+    <div class="stat-strip">
+      <div class="stat-pill">
+        <div class="stat-pill-val highlight">19</div>
+        <div class="stat-pill-lbl">HP</div>
+      </div>
+      <div class="stat-pill">
+        <div class="stat-pill-val">12</div>
+        <div class="stat-pill-lbl">AC</div>
+      </div>
+      <div class="stat-pill">
+        <div class="stat-pill-val">30 ft</div>
+        <div class="stat-pill-lbl">Speed</div>
+      </div>
+      <div class="stat-pill">
+        <div class="stat-pill-val">30 ft</div>
+        <div class="stat-pill-lbl">Climb</div>
+      </div>
+      <div class="stat-pill">
+        <div class="stat-pill-val">+3</div>
+        <div class="stat-pill-lbl">STR mod</div>
+      </div>
+    </div>
+
+    <div class="atk-section-title">Attacks &mdash; Multiattack: make both attacks each turn</div>
+
+    <div class="atk-block">
+      <div class="atk-name-row">
+        <span class="atk-name">Fist</span>
+        <span class="atk-tag">Melee &nbsp;&middot;&nbsp; Reach 5 ft &nbsp;&middot;&nbsp; One target</span>
+      </div>
+      <div class="atk-dice-row">
+        <div class="atk-dice-block">
+          <div class="atk-dice-num">+5</div>
+          <div class="atk-dice-lbl">To Hit</div>
+        </div>
+        <div class="atk-dice-block">
+          <div class="atk-dice-num">1d6+3</div>
+          <div class="atk-dice-lbl">Bludgeoning</div>
+        </div>
+      </div>
+      <div class="atk-explain">
+        Roll d20 + <strong>5</strong> to hit. On a hit, roll <strong>1 six-sided die</strong> and add <strong>3</strong>. Average 6.5 per hit &mdash; both fists together average <strong>13</strong>.
+      </div>
+    </div>
+
+    <div class="atk-block">
+      <div class="atk-name-row">
+        <span class="atk-name">Rock</span>
+        <span class="atk-tag">Ranged &nbsp;&middot;&nbsp; Range 25 / 50 ft &nbsp;&middot;&nbsp; One target</span>
+      </div>
+      <div class="atk-dice-row">
+        <div class="atk-dice-block">
+          <div class="atk-dice-num">+5</div>
+          <div class="atk-dice-lbl">To Hit</div>
+        </div>
+        <div class="atk-dice-block">
+          <div class="atk-dice-num">1d6+3</div>
+          <div class="atk-dice-lbl">Bludgeoning</div>
+        </div>
+      </div>
+      <div class="atk-explain">
+        Same roll as fist but thrown. Up to <strong>25 ft</strong> normally; up to <strong>50 ft</strong> at disadvantage (roll d20 twice, take the lower). Replaces one of your fist attacks &mdash; you still get multiattack, so you could throw one rock and punch once, or throw two rocks.
+      </div>
+    </div>
+
+    <div class="special-title">Special Abilities</div>
+    <div class="special-item">
+      <strong>Multiattack</strong> — You make <strong>two attacks</strong> per action, in any combination of fist and rock. This doubles your damage output compared to a single-attack form.
+    </div>
+    <div class="special-item">
+      <strong>Climb speed</strong> — You can climb at full speed (30 ft) with no extra cost. Useful for getting to high ground or across difficult terrain.
+    </div>
+  </div>
+
+  <!-- ── QUICK COMPARE ── -->
+  <div class="divider" style="margin-top:0.75rem;">
+    <div class="divider-line"></div>
+    <span class="divider-orn">&#9884;</span>
+    <div class="divider-line"></div>
+  </div>
+
+  <div class="rules-box">
+    <div class="section-title">When to pick which</div>
+    <div class="rule-item">
+      <span class="rule-icon">&#9680;</span>
+      <div>
+        <span class="rule-label">Giant Hyena</span>
+        Best when you need to <strong>absorb punishment</strong> — 45 HP is a huge buffer. Also great against groups of weaker enemies where Rampage can chain attacks.
+      </div>
+    </div>
+    <div class="rule-item">
+      <span class="rule-icon">&#9644;</span>
+      <div>
+        <span class="rule-label">Ape</span>
+        Best when you need <strong>ranged pressure or high single-target damage</strong>. Two attacks per round, can throw rocks from safety, and can climb to unexpected positions.
+      </div>
+    </div>
+  </div>
+
+  <!-- nav -->
+  <div class="divider" style="margin-top:0.75rem;">
+    <div class="divider-line"></div>
+  </div>
+  <div class="nav-bar">
+    <a class="nav-link" href="character-sheet.html">&#8592; Character Sheet</a>
+    <a class="nav-link" href="spells.html">Spells &#8594;</a>
+  </div>
+
+</div>
+
+<script>
+  document.querySelectorAll('.use-dot').forEach(d => {
+    d.addEventListener('click', () => d.classList.toggle('used'));
+  });
+</script>
+</body>
+</html>

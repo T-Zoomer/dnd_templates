@@ -1,0 +1,521 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Lute — Spells</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: system-ui, -apple-system, sans-serif; font-size: 14px; background: #f4f4f4; color: #111; padding: 10px; }
+  h1 { font-size: 18px; margin-bottom: 2px; }
+  .sub { font-size: 12px; color: #555; margin-bottom: 12px; }
+
+  /* Slot tracker */
+  .slots-section { background: #fff; border: 1px solid #ccc; border-radius: 6px; padding: 10px 12px; margin-bottom: 10px; }
+  .slots-section h2 { font-size: 13px; text-transform: uppercase; letter-spacing: .05em; color: #555; margin-bottom: 6px; }
+  .slot-row { display: flex; align-items: center; gap: 8px; margin-bottom: 4px; font-size: 13px; }
+  .slot-row .lbl { width: 70px; font-weight: 600; }
+  .slot-row .note { font-size: 11px; color: #888; font-style: italic; }
+  .slot { width: 22px; height: 22px; border-radius: 50%; border: 2px solid #555; background: #fff; cursor: pointer; display: inline-block; transition: background .1s; }
+  .slot.used { background: #333; border-color: #333; }
+
+  /* Level headings */
+  .level-heading { font-size: 13px; font-weight: 700; text-transform: uppercase; letter-spacing: .08em; color: #333; background: #e0e0e0; padding: 5px 10px; border-radius: 4px; margin: 12px 0 4px; }
+  .group-label { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: .06em; color: #777; padding: 6px 4px 2px; }
+
+  /* Spell rows */
+  details { border-bottom: 1px solid #ddd; background: #fff; }
+  details:first-of-type { border-top: 1px solid #ddd; }
+  summary { padding: 8px 10px; cursor: pointer; list-style: none; display: flex; align-items: baseline; gap: 6px; line-height: 1.3; }
+  summary::-webkit-details-marker { display: none; }
+  summary::before { content: '▸'; font-size: 10px; color: #888; flex-shrink: 0; }
+  details[open] summary::before { content: '▾'; }
+  .sname { font-weight: 600; font-size: 14px; flex: 1; }
+  .badges { display: flex; gap: 3px; flex-wrap: wrap; }
+  .badge { font-size: 10px; padding: 1px 5px; border-radius: 3px; font-weight: 600; white-space: nowrap; }
+  .badge.ritual  { background: #fdf3d0; color: #7a5500; border: 1px solid #d4aa00; }
+  .badge.conc    { background: #e8edf8; color: #2a4080; border: 1px solid #7090c0; }
+  .badge.ba      { background: #e8f5e8; color: #1a5c1a; border: 1px solid #5a9a5a; }
+  .badge.react   { background: #fdeee0; color: #7a3000; border: 1px solid #c07040; }
+  .badge.ua      { background: #f0e8f8; color: #4a1a7a; border: 1px solid #9060c0; }
+  .badge.save    { background: #fce8e8; color: #6a0000; border: 1px solid #c06060; }
+
+  .spell-body { padding: 4px 12px 10px 24px; font-size: 13px; line-height: 1.55; }
+  .meta { display: grid; grid-template-columns: 1fr 1fr; gap: 2px 12px; margin-bottom: 8px; font-size: 12px; color: #444; }
+  .meta span { display: block; }
+  .meta .mk { font-weight: 600; color: #222; }
+  .desc-text { color: #222; }
+  .upcast { margin-top: 6px; font-size: 12px; color: #555; }
+  .upcast strong { color: #7c1c1c; }
+
+  details.avail summary .sname { color: #666; font-weight: 400; }
+  details.unavail { opacity: 0.5; }
+</style>
+</head>
+<body>
+
+<h1>Lute — Druid Spells</h1>
+<div class="sub">Circle of the Moon · Level 2 · Spellcasting: Wisdom · Save DC 13 · Attack +5 · Prepared: 5</div>
+
+<!-- SLOT TRACKER -->
+<div class="slots-section">
+  <h2>Spell Slots</h2>
+  <div class="slot-row">
+    <span class="lbl">1st level</span>
+    <span class="slot" onclick="this.classList.toggle('used')" title="Slot 1"></span>
+    <span class="slot" onclick="this.classList.toggle('used')" title="Slot 2"></span>
+    <span class="slot" onclick="this.classList.toggle('used')" title="Slot 3"></span>
+    <span class="note">3 slots</span>
+  </div>
+  <div class="slot-row">
+    <span class="lbl">2nd level</span>
+    <span class="note">unlocks at level 3</span>
+  </div>
+  <div class="slot-row" style="margin-top:4px; font-size:12px; color:#666;">
+    Wild Shape: <span class="slot" onclick="this.classList.toggle('used')" style="margin-left:6px;"></span><span class="slot" onclick="this.classList.toggle('used')"></span> <span class="note" style="margin-left:4px;">2 / short rest</span>
+  </div>
+</div>
+
+<!-- CANTRIPS -->
+<div class="level-heading">Cantrips</div>
+
+<details>
+  <summary>
+    <span class="sname">Guidance</span>
+    <span class="badges"><span class="badge conc">Conc</span></span>
+  </summary>
+  <div class="spell-body">
+    <div class="meta">
+      <span><span class="mk">School</span> Divination</span>
+      <span><span class="mk">Time</span> 1 action</span>
+      <span><span class="mk">Range</span> Touch</span>
+      <span><span class="mk">Duration</span> Conc, 1 min</span>
+      <span><span class="mk">Components</span> V, S</span>
+    </div>
+    <div class="desc-text">You touch one willing creature. Once before the spell ends, the target can roll a d4 and add the number rolled to one ability check of its choice. It can roll the die before or after making the ability check. The spell then ends.</div>
+  </div>
+</details>
+
+<details>
+  <summary>
+    <span class="sname">Mending</span>
+  </summary>
+  <div class="spell-body">
+    <div class="meta">
+      <span><span class="mk">School</span> Transmutation</span>
+      <span><span class="mk">Time</span> 1 minute</span>
+      <span><span class="mk">Range</span> Touch</span>
+      <span><span class="mk">Duration</span> Instantaneous</span>
+      <span><span class="mk">Components</span> V, S, M (two lodestones)</span>
+    </div>
+    <div class="desc-text">This spell repairs a single break or tear in an object you touch, such as a broken chain link, two halves of a broken key, a torn cloak, or a leaking wineskin. As long as the break or tear is no larger than 1 foot in any dimension, you mend it, leaving no trace of the former damage. This spell can physically repair a magic item or construct, but the spell can't restore magic to such an object.</div>
+  </div>
+</details>
+
+<!-- 1ST LEVEL -->
+<div class="level-heading">1st Level — 3 slots</div>
+<div class="group-label">Prepared (5 of 5)</div>
+
+<details>
+  <summary>
+    <span class="sname">Cure Wounds</span>
+  </summary>
+  <div class="spell-body">
+    <div class="meta">
+      <span><span class="mk">School</span> Evocation</span>
+      <span><span class="mk">Time</span> 1 action</span>
+      <span><span class="mk">Range</span> Touch</span>
+      <span><span class="mk">Duration</span> Instantaneous</span>
+      <span><span class="mk">Components</span> V, S</span>
+    </div>
+    <div class="desc-text">A creature you touch regains 1d8 + spellcasting modifier HP. No effect on undead or constructs.</div>
+    <div class="upcast"><strong>Higher levels:</strong> +1d8 per slot level above 1st.</div>
+  </div>
+</details>
+
+<details>
+  <summary>
+    <span class="sname">Entangle</span>
+    <span class="badges"><span class="badge conc">Conc</span><span class="badge save">Str save</span></span>
+  </summary>
+  <div class="spell-body">
+    <div class="meta">
+      <span><span class="mk">School</span> Conjuration</span>
+      <span><span class="mk">Time</span> 1 action</span>
+      <span><span class="mk">Range</span> 90 ft</span>
+      <span><span class="mk">Duration</span> Conc, 1 min</span>
+      <span><span class="mk">Components</span> V, S</span>
+    </div>
+    <div class="desc-text">Grasping weeds and vines sprout in a 20-foot square from a point within range. The area is difficult terrain for the duration. Creatures in the area when cast must make a Strength save or be restrained. A restrained creature can use its action to make a Strength check vs your spell save DC to free itself.</div>
+  </div>
+</details>
+
+<details>
+  <summary>
+    <span class="sname">Faerie Fire</span>
+    <span class="badges"><span class="badge conc">Conc</span><span class="badge save">Dex save</span></span>
+  </summary>
+  <div class="spell-body">
+    <div class="meta">
+      <span><span class="mk">School</span> Evocation</span>
+      <span><span class="mk">Time</span> 1 action</span>
+      <span><span class="mk">Range</span> 60 ft</span>
+      <span><span class="mk">Duration</span> Conc, 1 min</span>
+      <span><span class="mk">Components</span> V</span>
+    </div>
+    <div class="desc-text">Each object in a 20-foot cube within range is outlined in blue, green, or violet light. Any creature in the area that fails a Dexterity save is also outlined. For the duration, objects and affected creatures shed dim light in a 10-ft radius. Attack rolls against affected creatures have advantage, and affected creatures can't benefit from being invisible.</div>
+  </div>
+</details>
+
+<details>
+  <summary>
+    <span class="sname">Goodberry</span>
+  </summary>
+  <div class="spell-body">
+    <div class="meta">
+      <span><span class="mk">School</span> Transmutation</span>
+      <span><span class="mk">Time</span> 1 action</span>
+      <span><span class="mk">Range</span> Touch</span>
+      <span><span class="mk">Duration</span> Instantaneous</span>
+      <span><span class="mk">Components</span> V, S, M (sprig of mistletoe)</span>
+    </div>
+    <div class="desc-text">Up to ten berries appear in your hand, infused with magic. A creature can use its action to eat one berry, restoring 1 HP and providing nourishment for one day. Berries lose potency after 24 hours.</div>
+  </div>
+</details>
+
+<details>
+  <summary>
+    <span class="sname">Healing Word</span>
+    <span class="badges"><span class="badge ba">Bonus action</span></span>
+  </summary>
+  <div class="spell-body">
+    <div class="meta">
+      <span><span class="mk">School</span> Evocation</span>
+      <span><span class="mk">Time</span> 1 bonus action</span>
+      <span><span class="mk">Range</span> 60 ft</span>
+      <span><span class="mk">Duration</span> Instantaneous</span>
+      <span><span class="mk">Components</span> V</span>
+    </div>
+    <div class="desc-text">A creature you can see within range regains 1d4 + spellcasting modifier HP. No effect on undead or constructs.</div>
+    <div class="upcast"><strong>Higher levels:</strong> +1d4 per slot level above 1st.</div>
+  </div>
+</details>
+
+<div class="group-label">Available to Prepare</div>
+
+<details class="avail">
+  <summary>
+    <span class="sname">Absorb Elements</span>
+    <span class="badges"><span class="badge react">Reaction</span></span>
+  </summary>
+  <div class="spell-body">
+    <div class="meta">
+      <span><span class="mk">School</span> Abjuration</span>
+      <span><span class="mk">Time</span> 1 reaction*</span>
+      <span><span class="mk">Range</span> Self</span>
+      <span><span class="mk">Duration</span> 1 round</span>
+      <span><span class="mk">Components</span> S</span>
+      <span><span class="mk">Trigger</span> When taking acid/cold/fire/lightning/thunder damage</span>
+    </div>
+    <div class="desc-text">You gain resistance to the triggering damage type until the start of your next turn. Also, the first time you hit with a melee attack on your next turn, the target takes an extra 1d6 damage of the triggering type.</div>
+    <div class="upcast"><strong>Higher levels:</strong> +1d6 extra damage per slot level above 1st.</div>
+  </div>
+</details>
+
+<details class="avail">
+  <summary>
+    <span class="sname">Animal Friendship</span>
+    <span class="badges"><span class="badge save">Wis save</span></span>
+  </summary>
+  <div class="spell-body">
+    <div class="meta">
+      <span><span class="mk">School</span> Enchantment</span>
+      <span><span class="mk">Time</span> 1 action</span>
+      <span><span class="mk">Range</span> 30 ft</span>
+      <span><span class="mk">Duration</span> 24 hours</span>
+      <span><span class="mk">Components</span> V, S, M (morsel of food)</span>
+    </div>
+    <div class="desc-text">Choose a beast you can see within range. If its Intelligence is 4 or higher, the spell fails. Otherwise, the beast must succeed on a Wisdom save or be charmed by you for the duration. Ends if you or your companions harm the target.</div>
+    <div class="upcast"><strong>Higher levels:</strong> +1 additional beast per slot level above 1st.</div>
+  </div>
+</details>
+
+<details class="avail">
+  <summary>
+    <span class="sname">Beast Bond</span>
+    <span class="badges"><span class="badge conc">Conc</span></span>
+  </summary>
+  <div class="spell-body">
+    <div class="meta">
+      <span><span class="mk">School</span> Divination</span>
+      <span><span class="mk">Time</span> 1 action</span>
+      <span><span class="mk">Range</span> Touch</span>
+      <span><span class="mk">Duration</span> Conc, 10 min</span>
+      <span><span class="mk">Components</span> V, S, M (bit of fur in cloth)</span>
+    </div>
+    <div class="desc-text">You establish a telepathic link with a beast you touch that is friendly or charmed. Fails if the beast's Intelligence is 4 or higher. While in line of sight, the beast understands your telepathic messages and can communicate simple emotions back. The beast gains advantage on attacks against creatures within 5 ft of you that you can see.</div>
+  </div>
+</details>
+
+<details class="avail">
+  <summary>
+    <span class="sname">Charm Person</span>
+    <span class="badges"><span class="badge save">Wis save</span></span>
+  </summary>
+  <div class="spell-body">
+    <div class="meta">
+      <span><span class="mk">School</span> Enchantment</span>
+      <span><span class="mk">Time</span> 1 action</span>
+      <span><span class="mk">Range</span> 30 ft</span>
+      <span><span class="mk">Duration</span> 1 hour</span>
+      <span><span class="mk">Components</span> V, S</span>
+    </div>
+    <div class="desc-text">A humanoid you can see within range must make a Wisdom save (with advantage if you or allies are fighting it). On a fail, it is charmed until the spell ends or until you harm it. The charmed creature regards you as a friendly acquaintance. It knows it was charmed when the spell ends.</div>
+    <div class="upcast"><strong>Higher levels:</strong> +1 target per slot level above 1st (must be within 30 ft of each other).</div>
+  </div>
+</details>
+
+<details class="avail">
+  <summary>
+    <span class="sname">Create or Destroy Water</span>
+  </summary>
+  <div class="spell-body">
+    <div class="meta">
+      <span><span class="mk">School</span> Transmutation</span>
+      <span><span class="mk">Time</span> 1 action</span>
+      <span><span class="mk">Range</span> 30 ft</span>
+      <span><span class="mk">Duration</span> Instantaneous</span>
+      <span><span class="mk">Components</span> V, S, M (drop of water or grains of sand)</span>
+    </div>
+    <div class="desc-text"><strong>Create:</strong> Up to 10 gallons of clean water in an open container, or rain in a 30-ft cube extinguishing exposed flames. <strong>Destroy:</strong> Destroy up to 10 gallons of water in an open container, or destroy fog in a 30-ft cube.</div>
+    <div class="upcast"><strong>Higher levels:</strong> +10 gallons or +5 ft cube per slot level above 1st.</div>
+  </div>
+</details>
+
+<details class="avail">
+  <summary>
+    <span class="sname">Detect Magic</span>
+    <span class="badges"><span class="badge ritual">Ritual</span><span class="badge conc">Conc</span></span>
+  </summary>
+  <div class="spell-body">
+    <div class="meta">
+      <span><span class="mk">School</span> Divination</span>
+      <span><span class="mk">Time</span> 1 action</span>
+      <span><span class="mk">Range</span> Self</span>
+      <span><span class="mk">Duration</span> Conc, 10 min</span>
+      <span><span class="mk">Components</span> V, S</span>
+    </div>
+    <div class="desc-text">For the duration, you sense the presence of magic within 30 ft. You can use your action to see a faint aura around any visible creature or object bearing magic and learn its school. Blocked by 1 ft of stone, 1 inch of metal, a thin sheet of lead, or 3 ft of wood/dirt.</div>
+  </div>
+</details>
+
+<details class="avail">
+  <summary>
+    <span class="sname">Detect Poison and Disease</span>
+    <span class="badges"><span class="badge ritual">Ritual</span><span class="badge conc">Conc</span></span>
+  </summary>
+  <div class="spell-body">
+    <div class="meta">
+      <span><span class="mk">School</span> Divination</span>
+      <span><span class="mk">Time</span> 1 action</span>
+      <span><span class="mk">Range</span> Self</span>
+      <span><span class="mk">Duration</span> Conc, 10 min</span>
+      <span><span class="mk">Components</span> V, S, M (yew leaf)</span>
+    </div>
+    <div class="desc-text">For the duration, you can sense the presence and location of poisons, poisonous creatures, and diseases within 30 ft. You also identify the kind of poison, poisonous creature, or disease in each case.</div>
+  </div>
+</details>
+
+<details class="avail">
+  <summary>
+    <span class="sname">Earth Tremor</span>
+    <span class="badges"><span class="badge save">Dex save</span></span>
+  </summary>
+  <div class="spell-body">
+    <div class="meta">
+      <span><span class="mk">School</span> Evocation</span>
+      <span><span class="mk">Time</span> 1 action</span>
+      <span><span class="mk">Range</span> 10 ft</span>
+      <span><span class="mk">Duration</span> Instantaneous</span>
+      <span><span class="mk">Components</span> V, S</span>
+    </div>
+    <div class="desc-text">Each creature other than you in range must make a Dexterity save. On a fail: 1d6 bludgeoning damage and knocked prone. If the ground is loose earth or stone, it becomes difficult terrain until cleared (1 min per 5-ft section).</div>
+    <div class="upcast"><strong>Higher levels:</strong> +1d6 per slot level above 1st.</div>
+  </div>
+</details>
+
+<details class="avail">
+  <summary>
+    <span class="sname">Fog Cloud</span>
+    <span class="badges"><span class="badge conc">Conc</span></span>
+  </summary>
+  <div class="spell-body">
+    <div class="meta">
+      <span><span class="mk">School</span> Conjuration</span>
+      <span><span class="mk">Time</span> 1 action</span>
+      <span><span class="mk">Range</span> 120 ft</span>
+      <span><span class="mk">Duration</span> Conc, 1 hour</span>
+      <span><span class="mk">Components</span> V, S</span>
+    </div>
+    <div class="desc-text">A 20-ft-radius sphere of fog centered on a point within range, spreading around corners. The area is heavily obscured. Dispersed by moderate wind (10+ mph).</div>
+    <div class="upcast"><strong>Higher levels:</strong> +20 ft radius per slot level above 1st.</div>
+  </div>
+</details>
+
+<details class="avail">
+  <summary>
+    <span class="sname">Guiding Hand</span>
+    <span class="badges"><span class="badge ritual">Ritual</span><span class="badge conc">Conc</span><span class="badge ua">UA</span></span>
+  </summary>
+  <div class="spell-body">
+    <div class="meta">
+      <span><span class="mk">School</span> Divination</span>
+      <span><span class="mk">Time</span> 1 minute</span>
+      <span><span class="mk">Range</span> 5 ft</span>
+      <span><span class="mk">Duration</span> Conc, 8 hours</span>
+      <span><span class="mk">Components</span> V, S</span>
+    </div>
+    <div class="desc-text">A Tiny incorporeal hand of shimmering light appears. You name one major landmark on the same plane that has been mapped. Whenever you move toward the hand, it moves away from you toward that landmark, staying 5 ft away. Disappears if you teleport or change planes.</div>
+  </div>
+</details>
+
+<details class="avail">
+  <summary>
+    <span class="sname">Ice Knife</span>
+    <span class="badges"><span class="badge save">Dex save</span></span>
+  </summary>
+  <div class="spell-body">
+    <div class="meta">
+      <span><span class="mk">School</span> Conjuration</span>
+      <span><span class="mk">Time</span> 1 action</span>
+      <span><span class="mk">Range</span> 60 ft</span>
+      <span><span class="mk">Duration</span> Instantaneous</span>
+      <span><span class="mk">Components</span> S, M (drop of water or piece of ice)</span>
+    </div>
+    <div class="desc-text">Make a ranged spell attack. <strong>Hit:</strong> 1d10 piercing damage. Then the shard explodes — all creatures within 5 ft of the point (hit or miss) must make a Dexterity save or take 2d6 cold damage (half on success).</div>
+    <div class="upcast"><strong>Higher levels:</strong> +1d6 cold damage per slot level above 1st.</div>
+  </div>
+</details>
+
+<details class="avail">
+  <summary>
+    <span class="sname">Jump</span>
+  </summary>
+  <div class="spell-body">
+    <div class="meta">
+      <span><span class="mk">School</span> Transmutation</span>
+      <span><span class="mk">Time</span> 1 action</span>
+      <span><span class="mk">Range</span> Touch</span>
+      <span><span class="mk">Duration</span> 1 minute</span>
+      <span><span class="mk">Components</span> V, S, M (grasshopper's hind leg)</span>
+    </div>
+    <div class="desc-text">You touch a creature. The creature's jump distance is tripled until the spell ends.</div>
+  </div>
+</details>
+
+<details class="avail">
+  <summary>
+    <span class="sname">Longstrider</span>
+  </summary>
+  <div class="spell-body">
+    <div class="meta">
+      <span><span class="mk">School</span> Transmutation</span>
+      <span><span class="mk">Time</span> 1 action</span>
+      <span><span class="mk">Range</span> Touch</span>
+      <span><span class="mk">Duration</span> 1 hour</span>
+      <span><span class="mk">Components</span> V, S, M (pinch of dirt)</span>
+    </div>
+    <div class="desc-text">You touch a creature. The target's speed increases by 10 ft until the spell ends.</div>
+    <div class="upcast"><strong>Higher levels:</strong> +1 target per slot level above 1st.</div>
+  </div>
+</details>
+
+<details class="avail">
+  <summary>
+    <span class="sname">Purify Food and Drink</span>
+    <span class="badges"><span class="badge ritual">Ritual</span></span>
+  </summary>
+  <div class="spell-body">
+    <div class="meta">
+      <span><span class="mk">School</span> Transmutation</span>
+      <span><span class="mk">Time</span> 1 action</span>
+      <span><span class="mk">Range</span> 10 ft</span>
+      <span><span class="mk">Duration</span> Instantaneous</span>
+      <span><span class="mk">Components</span> V, S</span>
+    </div>
+    <div class="desc-text">All nonmagical food and drink within a 5-ft-radius sphere centered on a point you choose within range is purified and rendered free of poison and disease.</div>
+  </div>
+</details>
+
+<details class="avail">
+  <summary>
+    <span class="sname">Snare</span>
+    <span class="badges"><span class="badge save">Dex save</span></span>
+  </summary>
+  <div class="spell-body">
+    <div class="meta">
+      <span><span class="mk">School</span> Abjuration</span>
+      <span><span class="mk">Time</span> 1 minute</span>
+      <span><span class="mk">Range</span> Touch</span>
+      <span><span class="mk">Duration</span> 8 hours (until triggered)</span>
+      <span><span class="mk">Components</span> S, M (25 ft of rope, consumed)</span>
+    </div>
+    <div class="desc-text">You create a nearly invisible magic trap in a 5-ft circle. Requires Intelligence (Investigation) vs your spell save DC to spot. Triggers when a Small/Medium/Large creature moves onto it: Dexterity save or hoisted upside down 3 ft in the air and restrained. Restrained creature can repeat the save at end of each turn, or someone in reach can make an Intelligence (Arcana) check vs your spell DC to free it.</div>
+  </div>
+</details>
+
+<details class="avail">
+  <summary>
+    <span class="sname">Speak with Animals</span>
+    <span class="badges"><span class="badge ritual">Ritual</span></span>
+  </summary>
+  <div class="spell-body">
+    <div class="meta">
+      <span><span class="mk">School</span> Divination</span>
+      <span><span class="mk">Time</span> 1 action</span>
+      <span><span class="mk">Range</span> Self</span>
+      <span><span class="mk">Duration</span> 10 minutes</span>
+      <span><span class="mk">Components</span> V, S</span>
+    </div>
+    <div class="desc-text">You can comprehend and verbally communicate with beasts for the duration. Beasts can give information about nearby locations and monsters based on what they've perceived in the past day. You might persuade a beast to do small favors (DM discretion).</div>
+  </div>
+</details>
+
+<details class="avail">
+  <summary>
+    <span class="sname">Thunderwave</span>
+    <span class="badges"><span class="badge save">Con save</span></span>
+  </summary>
+  <div class="spell-body">
+    <div class="meta">
+      <span><span class="mk">School</span> Evocation</span>
+      <span><span class="mk">Time</span> 1 action</span>
+      <span><span class="mk">Range</span> Self (15-ft cube)</span>
+      <span><span class="mk">Duration</span> Instantaneous</span>
+      <span><span class="mk">Components</span> V, S</span>
+    </div>
+    <div class="desc-text">Each creature in a 15-ft cube originating from you makes a Constitution save. <strong>Fail:</strong> 2d8 thunder damage and pushed 10 ft. <strong>Success:</strong> half damage, not pushed. Unsecured objects are automatically pushed. Thunderclap audible 300 ft.</div>
+    <div class="upcast"><strong>Higher levels:</strong> +1d8 per slot level above 1st.</div>
+  </div>
+</details>
+
+<details class="avail">
+  <summary>
+    <span class="sname">Wild Cunning</span>
+    <span class="badges"><span class="badge ritual">Ritual</span><span class="badge ua">UA</span></span>
+  </summary>
+  <div class="spell-body">
+    <div class="meta">
+      <span><span class="mk">School</span> Transmutation</span>
+      <span><span class="mk">Time</span> 1 action</span>
+      <span><span class="mk">Range</span> 120 ft</span>
+      <span><span class="mk">Duration</span> Instantaneous</span>
+      <span><span class="mk">Components</span> V, S</span>
+    </div>
+    <div class="desc-text">Call spirits of nature. Choose one: locate a nearby source of fresh water; locate edible plant food; locate a CR 1/2 or lower non-hostile creature; natural terrain doesn't impede your travel until your next turn; or ward yourself against natural hazards (+2 AC and Dex saves) until your next turn.</div>
+  </div>
+</details>
+
+<div style="height: 30px;"></div>
+</body>
+</html>

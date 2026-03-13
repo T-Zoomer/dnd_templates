@@ -1,0 +1,976 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>D&amp;D 5e — Druid Character Sheet</title>
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700;900&family=Cinzel+Decorative:wght@400;700&family=IM+Fell+English:ital@0;1&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --parchment:       #f0e2b8;
+      --parchment-light: #f9f0d6;
+      --parchment-dark:  #c9a96e;
+      --ink:             #1c0e06;
+      --ink-mid:         #3d200e;
+      --crimson:         #7c1c1c;
+      --crimson-dark:    #5a1010;
+      --gold:            #8b6a14;
+      --border:          #7a4820;
+      --border-light:    #a07040;
+      --fill-dot:        #1c0e06;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      background: #1a0d05;
+      background-image:
+        radial-gradient(ellipse at 30% 20%, #2e1508 0%, transparent 60%),
+        radial-gradient(ellipse at 70% 80%, #2e1508 0%, transparent 60%);
+      font-family: 'IM Fell English', Georgia, serif;
+      color: var(--ink);
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+      padding: 2.5rem 1rem;
+    }
+
+    /* ─── PAGE ─────────────────────────────────────────────── */
+    .page {
+      position: relative;
+      width: 100%;
+      max-width: 980px;
+      padding: 2.2rem 2.2rem 2rem;
+      background-color: var(--parchment);
+      background-image:
+        url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='400' height='400'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='400' height='400' filter='url(%23n)' opacity='0.06'/%3E%3C/svg%3E"),
+        radial-gradient(ellipse at 15% 10%,  rgba(160,110,40,0.25) 0%, transparent 45%),
+        radial-gradient(ellipse at 85% 90%,  rgba(140, 90,30,0.20) 0%, transparent 45%),
+        radial-gradient(ellipse at 50% 50%,  rgba(200,160,80,0.10) 0%, transparent 70%),
+        repeating-linear-gradient(0deg, transparent, transparent 3px, rgba(139,100,50,0.025) 3px, rgba(139,100,50,0.025) 4px),
+        linear-gradient(160deg, #f8edcc 0%, #e8d4a4 30%, #f3e7c0 55%, #dfc99a 78%, #f0e2b8 100%);
+      box-shadow:
+        0 0 0 2px var(--border),
+        0 0 0 7px var(--parchment-dark),
+        0 0 0 9px var(--border),
+        0 25px 70px rgba(0,0,0,0.75);
+    }
+
+    /* Aged corner spots */
+    .page::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+      background-image:
+        radial-gradient(circle at 2% 2%,   rgba(100,60,10,0.18) 0%, transparent 25%),
+        radial-gradient(circle at 98% 2%,  rgba(100,60,10,0.14) 0%, transparent 22%),
+        radial-gradient(circle at 2% 98%,  rgba(100,60,10,0.18) 0%, transparent 22%),
+        radial-gradient(circle at 98% 98%, rgba(100,60,10,0.14) 0%, transparent 20%);
+    }
+
+    /* ─── ORNAMENTS ─────────────────────────────────────────── */
+    .corner {
+      position: absolute;
+      font-size: 1.4rem;
+      color: var(--border);
+      opacity: 0.55;
+      line-height: 1;
+      pointer-events: none;
+    }
+    .corner-tl { top: 10px; left: 14px; }
+    .corner-tr { top: 10px; right: 14px; transform: scaleX(-1); }
+    .corner-bl { bottom: 10px; left: 14px; transform: scaleY(-1); }
+    .corner-br { bottom: 10px; right: 14px; transform: scale(-1,-1); }
+
+    /* ─── DIVIDERS ───────────────────────────────────────────── */
+    .divider {
+      display: flex;
+      align-items: center;
+      gap: 0.8rem;
+      margin: 0.6rem 0;
+    }
+    .divider-line {
+      flex: 1;
+      height: 1.5px;
+      background: linear-gradient(to right, transparent, var(--border) 20%, var(--border) 80%, transparent);
+    }
+    .divider-orn {
+      color: var(--crimson);
+      font-size: 1rem;
+      flex-shrink: 0;
+    }
+
+    /* ─── HEADER ─────────────────────────────────────────────── */
+    .sheet-badge {
+      text-align: center;
+      font-family: 'Cinzel Decorative', serif;
+      font-size: 0.7rem;
+      font-weight: 400;
+      color: var(--crimson);
+      letter-spacing: 0.35em;
+      text-transform: uppercase;
+      margin-bottom: 0.35rem;
+    }
+
+    .identity-row {
+      display: grid;
+      gap: 0.5rem;
+      margin-top: 0.5rem;
+    }
+    .identity-row-1 { grid-template-columns: 2.2fr 1.5fr 1fr 1fr; }
+    .identity-row-2 { grid-template-columns: 1fr 1fr 1fr 1fr; }
+
+    .field { border-bottom: 1.5px solid var(--border); padding-bottom: 2px; }
+    .field-val {
+      font-family: 'IM Fell English', serif;
+      font-size: 0.92rem;
+      color: var(--ink);
+      min-height: 1.3em;
+      padding: 1px 3px;
+    }
+    .field-val.blank { color: transparent; border-bottom: 1px solid var(--border-light); }
+    .field-lbl {
+      font-family: 'Cinzel', serif;
+      font-size: 0.52rem;
+      color: var(--crimson);
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      margin-top: 2px;
+    }
+
+    /* ─── MAIN 3-COL GRID ────────────────────────────────────── */
+    .main-grid {
+      display: grid;
+      grid-template-columns: 152px 1fr 1fr;
+      gap: 0.9rem;
+      margin-top: 0.8rem;
+    }
+
+    /* ─── SECTION BOX ────────────────────────────────────────── */
+    .sbox {
+      border: 1.5px solid var(--border);
+      border-radius: 3px;
+      padding: 0.45rem 0.55rem 0.5rem;
+      background: rgba(255,255,255,0.12);
+      margin-bottom: 0.6rem;
+    }
+    .sbox:last-child { margin-bottom: 0; }
+    .stitle {
+      font-family: 'Cinzel', serif;
+      font-size: 0.57rem;
+      font-weight: 700;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: var(--crimson-dark);
+      text-align: center;
+      border-bottom: 1px solid var(--border-light);
+      padding-bottom: 3px;
+      margin-bottom: 0.45rem;
+    }
+
+    /* ─── ABILITY SCORES ─────────────────────────────────────── */
+    .abilities { display: flex; flex-direction: column; gap: 0.35rem; }
+    .ability {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      border: 1.5px solid var(--border);
+      border-radius: 3px;
+      padding: 3px 6px 5px;
+      background: linear-gradient(180deg, var(--parchment-light) 0%, var(--parchment) 100%);
+    }
+    .ability.primary { border-color: var(--crimson); }
+    .ab-name {
+      font-family: 'Cinzel', serif;
+      font-size: 0.48rem;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--crimson);
+    }
+    .ab-mod {
+      font-family: 'Cinzel', serif;
+      font-size: 1.55rem;
+      font-weight: 900;
+      color: var(--ink);
+      line-height: 1.05;
+      margin: 1px 0;
+    }
+    .ability.primary .ab-mod { color: var(--crimson); }
+    .ab-circle {
+      width: 34px;
+      height: 34px;
+      border: 1.5px solid var(--border);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: var(--parchment-light);
+    }
+    .ability.primary .ab-circle { border-color: var(--crimson); }
+    .ab-score {
+      font-family: 'Cinzel', serif;
+      font-size: 0.82rem;
+      font-weight: 600;
+      color: var(--ink);
+    }
+    .ability.primary .ab-score { color: var(--crimson); }
+
+    /* ─── INSPIRATION ────────────────────────────────────────── */
+    .insp-box {
+      width: 28px; height: 28px;
+      border: 2px solid var(--border);
+      border-radius: 3px;
+      background: var(--parchment-light);
+      margin: 2px auto;
+      cursor: pointer;
+      transition: background 0.15s;
+    }
+    .insp-box:hover { background: rgba(122,27,27,0.15); }
+
+    /* ─── COMBAT STATS ───────────────────────────────────────── */
+    .combat-row { display: flex; justify-content: space-around; gap: 0.4rem; }
+    .cstat { display: flex; flex-direction: column; align-items: center; flex: 1; }
+    .cstat-val {
+      font-family: 'Cinzel', serif;
+      font-size: 1.35rem;
+      font-weight: 700;
+      color: var(--ink);
+      border: 1.5px solid var(--border);
+      border-radius: 3px;
+      padding: 1px 8px;
+      background: var(--parchment-light);
+      min-width: 52px;
+      text-align: center;
+    }
+    .cstat-lbl {
+      font-family: 'Cinzel', serif;
+      font-size: 0.47rem;
+      text-transform: uppercase;
+      letter-spacing: 0.09em;
+      color: var(--crimson);
+      margin-top: 2px;
+      text-align: center;
+    }
+
+    /* ─── HP ─────────────────────────────────────────────────── */
+    .hp-row { display: flex; gap: 0.6rem; align-items: flex-end; }
+    .hp-max { font-family: 'Cinzel', serif; font-size: 2rem; font-weight: 900; color: var(--crimson); line-height: 1; }
+    .hp-cur { flex: 1; border: 1.5px solid var(--border); height: 36px; border-radius: 3px; background: var(--parchment-light); }
+    .hp-sub { font-family: 'Cinzel', serif; font-size: 0.5rem; color: var(--ink-mid); text-transform: uppercase; letter-spacing: 0.08em; }
+    .hp-dice { font-family: 'Cinzel', serif; font-size: 0.75rem; font-weight: 600; color: var(--ink); margin-top: 4px; }
+
+    /* ─── SAVE / SKILL ROWS ──────────────────────────────────── */
+    .dot-row {
+      display: flex;
+      align-items: center;
+      gap: 5px;
+      padding: 1.5px 0;
+      font-size: 0.73rem;
+    }
+    .dot {
+      width: 9px; height: 9px;
+      border-radius: 50%;
+      border: 1.5px solid var(--border);
+      flex-shrink: 0;
+    }
+    .dot.filled { background: var(--fill-dot); border-color: var(--fill-dot); }
+    .dot-name { flex: 1; }
+    .dot-sub { font-size: 0.58rem; color: var(--ink-mid); font-style: italic; }
+    .dot-val {
+      font-family: 'Cinzel', serif;
+      font-size: 0.72rem;
+      font-weight: 600;
+      min-width: 22px;
+      text-align: right;
+    }
+    .passive { font-size: 0.6rem; font-style: italic; color: var(--ink-mid); margin-top: 3px; }
+
+    /* ─── ATTACKS ────────────────────────────────────────────── */
+    .atk-table { width: 100%; border-collapse: collapse; font-size: 0.73rem; }
+    .atk-table th {
+      font-family: 'Cinzel', serif;
+      font-size: 0.52rem;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: var(--crimson);
+      border-bottom: 1.5px solid var(--border);
+      padding: 2px 4px;
+      text-align: left;
+    }
+    .atk-table td { padding: 3px 4px; border-bottom: 1px solid rgba(122,72,32,0.28); }
+    .atk-note { font-size: 0.58rem; color: var(--ink-mid); font-style: italic; margin-top: 3px; }
+
+    /* ─── EQUIPMENT ──────────────────────────────────────────── */
+    .eq-chips { display: flex; flex-wrap: wrap; gap: 3px; }
+    .eq-chip {
+      font-size: 0.7rem;
+      background: rgba(139,105,20,0.10);
+      border: 1px solid var(--border-light);
+      border-radius: 2px;
+      padding: 1px 7px;
+    }
+    .gp { font-family: 'Cinzel', serif; font-size: 0.78rem; margin-top: 6px; }
+    .gp-icon { color: var(--gold); }
+
+    /* ─── MIDDLE / RIGHT COLUMN WRAPPER ─────────────────────── */
+    .col { display: flex; flex-direction: column; gap: 0.6rem; }
+
+    /* ─── SPELLS ─────────────────────────────────────────────── */
+    .spell-meta {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 0.5rem;
+    }
+    .sp-stat { text-align: center; }
+    .sp-val { font-family: 'Cinzel', serif; font-size: 1rem; font-weight: 700; color: var(--ink); }
+    .sp-lbl { font-family: 'Cinzel', serif; font-size: 0.45rem; text-transform: uppercase; letter-spacing: 0.08em; color: var(--crimson); }
+
+    .spell-lvl-row {
+      display: flex;
+      align-items: center;
+      gap: 7px;
+      font-family: 'Cinzel', serif;
+      font-size: 0.6rem;
+      font-weight: 700;
+      color: var(--crimson);
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      margin: 0.5rem 0 0.25rem;
+    }
+    .slots { display: flex; gap: 4px; }
+    .slot {
+      width: 13px; height: 13px;
+      border-radius: 50%;
+      border: 1.5px solid var(--border);
+      cursor: pointer;
+      transition: background 0.15s;
+      flex-shrink: 0;
+    }
+    .slot:hover { background: rgba(122,27,27,0.2); }
+    .slot.used { background: var(--fill-dot); border-color: var(--fill-dot); }
+    .slot-count { font-size: 0.52rem; font-weight: normal; color: var(--ink-mid); font-style: italic; }
+
+    .spell-chips { display: flex; flex-wrap: wrap; gap: 3px; margin-bottom: 0.2rem; }
+    .spell-chip {
+      font-size: 0.7rem;
+      background: rgba(122,27,27,0.08);
+      border: 1px solid var(--border-light);
+      border-radius: 2px;
+      padding: 1px 7px;
+    }
+    .spell-chip.em { font-style: italic; color: var(--ink-mid); }
+    .spell-chip.avail {
+      opacity: 0.5;
+      font-style: italic;
+      background: rgba(100,80,20,0.05);
+    }
+    .spell-chip.ritual::after {
+      content: '\00AE';
+      font-size: 0.58em;
+      vertical-align: super;
+      color: var(--gold);
+      margin-left: 1px;
+    }
+    .avail-label {
+      font-family: 'Cinzel', serif;
+      font-size: 0.46rem;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: var(--ink-mid);
+      margin: 0.3rem 0 0.15rem;
+    }
+
+    /* ─── WILD SHAPE ─────────────────────────────────────────── */
+    .ws-meta { font-size: 0.65rem; color: var(--ink-mid); margin-bottom: 0.4rem; line-height: 1.6; }
+    .ws-uses { display: flex; gap: 8px; align-items: center; margin-bottom: 0.5rem; }
+    .ws-dot {
+      width: 20px; height: 20px;
+      border: 2px solid var(--crimson);
+      border-radius: 50%;
+      cursor: pointer;
+      transition: background 0.15s;
+    }
+    .ws-dot:hover  { background: rgba(122,27,27,0.15); }
+    .ws-dot.used   { background: var(--crimson); }
+    .ws-hint { font-size: 0.58rem; color: var(--ink-mid); font-style: italic; }
+    .ws-form {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      padding: 3px 0;
+      border-bottom: 1px dotted var(--border-light);
+      font-size: 0.73rem;
+    }
+    .ws-form:last-of-type { border-bottom: none; }
+    .ws-fn { font-weight: bold; }
+    .ws-fs { font-size: 0.62rem; color: var(--ink-mid); font-style: italic; }
+
+    /* ─── PROFICIENCIES ──────────────────────────────────────── */
+    .prof-text { font-size: 0.7rem; line-height: 1.6; }
+    .pc { font-family: 'Cinzel', serif; font-size: 0.56rem; color: var(--crimson); text-transform: uppercase; letter-spacing: 0.08em; font-weight: 700; }
+
+    /* ─── PERSONALITY ────────────────────────────────────────── */
+    .pers-item { margin-bottom: 0.5rem; }
+    .pers-lbl { font-family: 'Cinzel', serif; font-size: 0.52rem; text-transform: uppercase; letter-spacing: 0.12em; color: var(--crimson); font-weight: 700; }
+    .pers-text { font-size: 0.72rem; line-height: 1.45; font-style: italic; }
+
+    /* ─── FEATURES ───────────────────────────────────────────── */
+    .feat-item { margin-bottom: 0.45rem; }
+    .feat-name { font-family: 'Cinzel', serif; font-size: 0.62rem; font-weight: 700; color: var(--crimson); text-transform: uppercase; letter-spacing: 0.08em; }
+    .feat-desc { font-size: 0.7rem; line-height: 1.45; margin-top: 1px; }
+
+    /* ─── BOTTOM GRIDS ───────────────────────────────────────── */
+    .spell-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      gap: 0.9rem;
+      margin-top: 0.2rem;
+    }
+    .spell-left { grid-column: 1 / 3; }
+
+    .bottom-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 0.9rem;
+      margin-top: 0.2rem;
+    }
+
+    /* ─── FOOTER ─────────────────────────────────────────────── */
+    .footer-text {
+      font-family: 'Cinzel', serif;
+      font-size: 0.5rem;
+      letter-spacing: 0.25em;
+      color: var(--ink-mid);
+      text-transform: uppercase;
+    }
+
+    /* ─── SPECIAL ITEMS ──────────────────────────────────────── */
+    .eq-chip.relic {
+      background: rgba(34, 80, 34, 0.13);
+      border-color: #4a7a28;
+      color: #2a4a14;
+      font-style: italic;
+      font-weight: bold;
+    }
+
+    .relic-card {
+      border: 2px solid #4a7a28;
+      border-radius: 3px;
+      background: rgba(34,80,34,0.07);
+      padding: 0.65rem 0.75rem 0.7rem;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .relic-card::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+      background-image:
+        radial-gradient(ellipse at 8% 15%,  rgba(60,120,40,0.14) 0%, transparent 50%),
+        radial-gradient(ellipse at 92% 85%, rgba(40,100,30,0.10) 0%, transparent 50%);
+    }
+
+    .relic-header {
+      display: flex;
+      align-items: baseline;
+      gap: 0.6rem;
+      margin-bottom: 0.4rem;
+    }
+
+    .relic-name {
+      font-family: 'Cinzel', serif;
+      font-size: 0.85rem;
+      font-weight: 700;
+      color: #243d12;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+    }
+
+    .relic-tag {
+      font-family: 'Cinzel', serif;
+      font-size: 0.47rem;
+      text-transform: uppercase;
+      letter-spacing: 0.14em;
+      color: #4a7a28;
+      border: 1px solid #4a7a28;
+      border-radius: 2px;
+      padding: 1px 5px;
+    }
+
+    .relic-rule {
+      height: 1px;
+      background: linear-gradient(to right, #4a7a28, rgba(74,122,40,0.15));
+      margin-bottom: 0.45rem;
+    }
+
+    .relic-desc {
+      font-size: 0.73rem;
+      line-height: 1.65;
+      font-style: italic;
+      color: var(--ink);
+    }
+
+    .relic-desc strong {
+      font-style: normal;
+      font-family: 'Cinzel', serif;
+      font-size: 0.63rem;
+      color: #243d12;
+      font-weight: 700;
+      letter-spacing: 0.05em;
+    }
+
+    /* ─── PRINT ──────────────────────────────────────────────── */
+    @media print {
+      body { background: white; padding: 0; }
+      .page { box-shadow: none; max-width: 100%; padding: 1rem; }
+      .page::after { display: none; }
+    }
+
+    /* ─── MOBILE ─────────────────────────────────────────────── */
+    @media (max-width: 640px) {
+      body { padding: 0.5rem 0.25rem; }
+      .page { padding: 1rem 0.75rem; }
+      .corner { display: none; }
+      .identity-row-1,
+      .identity-row-2 { grid-template-columns: 1fr 1fr; }
+      .main-grid { grid-template-columns: 1fr; }
+      .spell-grid { grid-template-columns: 1fr; }
+      .spell-left { grid-column: 1; }
+      .bottom-grid { grid-template-columns: 1fr; }
+      .abilities {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 0.3rem;
+      }
+      .combat-row { flex-wrap: wrap; }
+      .hp-row { flex-wrap: wrap; }
+      .hp-cur { min-width: 80px; }
+    }
+  </style>
+</head>
+<body>
+<div class="page">
+  <span class="corner corner-tl">&#10147;</span>
+  <span class="corner corner-tr">&#10147;</span>
+  <span class="corner corner-bl">&#10147;</span>
+  <span class="corner corner-br">&#10147;</span>
+
+  <!-- ═══ HEADER ════════════════════════════════════════════════ -->
+  <div class="sheet-badge">Dungeons &amp; Dragons &mdash; Fifth Edition &mdash; Character Record</div>
+  <div class="divider">
+    <div class="divider-line"></div>
+    <span class="divider-orn">&#10022;</span>
+    <span class="divider-orn" style="font-size:1.3rem;">&#9830;</span>
+    <span class="divider-orn">&#10022;</span>
+    <div class="divider-line"></div>
+  </div>
+
+  <div class="identity-row identity-row-1">
+    <div class="field">
+      <div class="field-val">Lute</div>
+      <div class="field-lbl">Character Name</div>
+    </div>
+    <div class="field">
+      <div class="field-val">Druid (Circle of the Moon) 2</div>
+      <div class="field-lbl">Class &amp; Level</div>
+    </div>
+    <div class="field">
+      <div class="field-val">Failed Merchant</div>
+      <div class="field-lbl">Background</div>
+    </div>
+    <div class="field">
+      <div class="field-val">Thijmen</div>
+      <div class="field-lbl">Player Name</div>
+    </div>
+  </div>
+  <div class="identity-row identity-row-2" style="margin-top:0.4rem;">
+    <div class="field">
+      <div class="field-val">Human</div>
+      <div class="field-lbl">Race</div>
+    </div>
+    <div class="field">
+      <div class="field-val blank">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</div>
+      <div class="field-lbl">Alignment</div>
+    </div>
+    <div class="field">
+      <div class="field-val">0</div>
+      <div class="field-lbl">Experience Points</div>
+    </div>
+    <div class="field">
+      <div class="field-val" style="font-family:'Cinzel',serif; font-weight:700; color:var(--crimson);">+2</div>
+      <div class="field-lbl">Proficiency Bonus</div>
+    </div>
+  </div>
+
+  <div class="divider" style="margin-top:0.9rem;">
+    <div class="divider-line"></div>
+    <span class="divider-orn">&#9884;</span>
+    <div class="divider-line"></div>
+  </div>
+
+  <!-- ═══ MAIN 3-COLUMN ══════════════════════════════════════════ -->
+  <div class="main-grid">
+
+    <!-- ── LEFT: ABILITY SCORES ─────────────────────────────── -->
+    <div>
+      <div class="sbox">
+        <div class="stitle">Ability Scores</div>
+        <div class="abilities">
+          <div class="ability">
+            <div class="ab-name">Strength</div>
+            <div class="ab-mod">+0</div>
+            <div class="ab-circle"><span class="ab-score">11</span></div>
+          </div>
+          <div class="ability">
+            <div class="ab-name">Dexterity</div>
+            <div class="ab-mod">+2</div>
+            <div class="ab-circle"><span class="ab-score">14</span></div>
+          </div>
+          <div class="ability">
+            <div class="ab-name">Constitution</div>
+            <div class="ab-mod">+2</div>
+            <div class="ab-circle"><span class="ab-score">15</span></div>
+          </div>
+          <div class="ability">
+            <div class="ab-name">Intelligence</div>
+            <div class="ab-mod">+1</div>
+            <div class="ab-circle"><span class="ab-score">13</span></div>
+          </div>
+          <div class="ability primary">
+            <div class="ab-name">Wisdom</div>
+            <div class="ab-mod">+3</div>
+            <div class="ab-circle"><span class="ab-score">16</span></div>
+          </div>
+          <div class="ability">
+            <div class="ab-name">Charisma</div>
+            <div class="ab-mod">&minus;1</div>
+            <div class="ab-circle"><span class="ab-score">9</span></div>
+          </div>
+        </div>
+      </div>
+      <div class="sbox">
+        <div class="stitle">Inspiration</div>
+        <div class="insp-box" title="Click to mark Inspiration"></div>
+      </div>
+    </div>
+
+    <!-- ── MIDDLE COLUMN ──────────────────────────────────────── -->
+    <div class="col">
+      <!-- Combat -->
+      <div class="sbox">
+        <div class="stitle">Combat</div>
+        <div class="combat-row">
+          <div class="cstat">
+            <div class="cstat-val">16</div>
+            <div class="cstat-lbl">Armor Class</div>
+          </div>
+          <div class="cstat">
+            <div class="cstat-val">+2</div>
+            <div class="cstat-lbl">Initiative</div>
+          </div>
+          <div class="cstat">
+            <div class="cstat-val">30</div>
+            <div class="cstat-lbl">Speed (ft)</div>
+          </div>
+        </div>
+        <div style="font-size:0.62rem; color:var(--ink-mid); text-align:center; margin-top:5px; font-style:italic;">Hide armor (12+2) + wooden shield (+2) &mdash; no metal rule applies</div>
+      </div>
+
+      <!-- HP -->
+      <div class="sbox">
+        <div class="stitle">Hit Points</div>
+        <div class="hp-row">
+          <div>
+            <div class="hp-sub">Maximum</div>
+            <div class="hp-max">17</div>
+          </div>
+          <div style="flex:1;">
+            <div class="hp-sub">Current HP</div>
+            <div class="hp-cur"></div>
+          </div>
+          <div>
+            <div class="hp-sub">Temporary HP</div>
+            <div class="hp-cur" style="width:60px;"></div>
+          </div>
+        </div>
+        <div class="hp-dice">Hit Dice: <strong>2d8</strong></div>
+      </div>
+
+      <!-- Saving Throws -->
+      <div class="sbox">
+        <div class="stitle">Saving Throws</div>
+        <div class="dot-row"><span class="dot"></span><span class="dot-name">Strength</span><span class="dot-val">+0</span></div>
+        <div class="dot-row"><span class="dot"></span><span class="dot-name">Dexterity</span><span class="dot-val">+2</span></div>
+        <div class="dot-row"><span class="dot"></span><span class="dot-name">Constitution</span><span class="dot-val">+2</span></div>
+        <div class="dot-row"><span class="dot filled"></span><span class="dot-name">Intelligence</span><span class="dot-val">+3</span></div>
+        <div class="dot-row"><span class="dot filled"></span><span class="dot-name">Wisdom</span><span class="dot-val">+5</span></div>
+        <div class="dot-row"><span class="dot"></span><span class="dot-name">Charisma</span><span class="dot-val">&minus;1</span></div>
+      </div>
+
+      <!-- Attacks -->
+      <div class="sbox">
+        <div class="stitle">Attacks &amp; Spellcasting</div>
+        <table class="atk-table">
+          <thead>
+            <tr>
+              <th>Name</th>
+              <th>To Hit</th>
+              <th>Damage / Type</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr><td>Scimitar</td><td>+4</td><td>1d6+2 slashing</td></tr>
+            <tr><td>Unarmed Strike</td><td>+2</td><td>1 bludgeoning</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <!-- Equipment -->
+      <div class="sbox">
+        <div class="stitle">Equipment</div>
+        <div class="eq-chips">
+          <span class="eq-chip">Hide Armor</span>
+          <span class="eq-chip">Wooden Shield</span>
+          <span class="eq-chip">Scimitar</span>
+          <span class="eq-chip">Explorer's Pack</span>
+          <span class="eq-chip">Druidic Focus</span>
+          <span class="eq-chip">Merchant's Scales</span>
+          <span class="eq-chip">Debt Ledger</span>
+          <span class="eq-chip relic">Stone Crest</span>
+        </div>
+        <div class="gp"><span class="gp-icon">&#11042;</span> 15 gp</div>
+      </div>
+    </div>
+
+    <!-- ── RIGHT COLUMN: SKILLS ───────────────────────────────── -->
+    <div class="col">
+      <div class="sbox">
+        <div class="stitle">Skills</div>
+        <div class="dot-row"><span class="dot"></span><span class="dot-name">Acrobatics <span class="dot-sub">(Dex)</span></span><span class="dot-val">+2</span></div>
+        <div class="dot-row"><span class="dot"></span><span class="dot-name">Animal Handling <span class="dot-sub">(Wis)</span></span><span class="dot-val">+3</span></div>
+        <div class="dot-row"><span class="dot"></span><span class="dot-name">Arcana <span class="dot-sub">(Int)</span></span><span class="dot-val">+1</span></div>
+        <div class="dot-row"><span class="dot"></span><span class="dot-name">Athletics <span class="dot-sub">(Str)</span></span><span class="dot-val">+0</span></div>
+        <div class="dot-row"><span class="dot"></span><span class="dot-name">Deception <span class="dot-sub">(Cha)</span></span><span class="dot-val">&minus;1</span></div>
+        <div class="dot-row"><span class="dot"></span><span class="dot-name">History <span class="dot-sub">(Int)</span></span><span class="dot-val">+1</span></div>
+        <div class="dot-row"><span class="dot filled"></span><span class="dot-name">Insight <span class="dot-sub">(Wis)</span></span><span class="dot-val">+5</span></div>
+        <div class="dot-row"><span class="dot"></span><span class="dot-name">Intimidation <span class="dot-sub">(Cha)</span></span><span class="dot-val">&minus;1</span></div>
+        <div class="dot-row"><span class="dot"></span><span class="dot-name">Investigation <span class="dot-sub">(Int)</span></span><span class="dot-val">+1</span></div>
+        <div class="dot-row"><span class="dot filled"></span><span class="dot-name">Medicine <span class="dot-sub">(Wis)</span></span><span class="dot-val">+5</span></div>
+        <div class="dot-row"><span class="dot"></span><span class="dot-name">Nature <span class="dot-sub">(Int)</span></span><span class="dot-val">+1</span></div>
+        <div class="dot-row"><span class="dot filled"></span><span class="dot-name">Perception <span class="dot-sub">(Wis)</span></span><span class="dot-val">+5</span></div>
+        <div class="dot-row"><span class="dot"></span><span class="dot-name">Performance <span class="dot-sub">(Cha)</span></span><span class="dot-val">&minus;1</span></div>
+        <div class="dot-row"><span class="dot filled"></span><span class="dot-name">Persuasion <span class="dot-sub">(Cha)</span></span><span class="dot-val">+1</span></div>
+        <div class="dot-row"><span class="dot"></span><span class="dot-name">Religion <span class="dot-sub">(Int)</span></span><span class="dot-val">+1</span></div>
+        <div class="dot-row"><span class="dot"></span><span class="dot-name">Sleight of Hand <span class="dot-sub">(Dex)</span></span><span class="dot-val">+2</span></div>
+        <div class="dot-row"><span class="dot"></span><span class="dot-name">Stealth <span class="dot-sub">(Dex)</span></span><span class="dot-val">+2</span></div>
+        <div class="dot-row"><span class="dot"></span><span class="dot-name">Survival <span class="dot-sub">(Wis)</span></span><span class="dot-val">+3</span></div>
+        <div class="passive">&#11835; Passive Perception: 15</div>
+      </div>
+    </div>
+  </div><!-- /main-grid -->
+
+  <!-- ═══ SPELLCASTING + WILD SHAPE ══════════════════════════════ -->
+  <div class="divider" style="margin-top:0.8rem;">
+    <div class="divider-line"></div>
+    <span class="divider-orn">&#10022;</span>
+    <span class="divider-orn" style="font-size:1.3rem;">&#9830;</span>
+    <span class="divider-orn">&#10022;</span>
+    <div class="divider-line"></div>
+  </div>
+
+  <div class="spell-grid">
+    <!-- Spellcasting (spans 2 cols) -->
+    <div class="sbox spell-left">
+      <div class="stitle">Spellcasting &mdash; Druid</div>
+      <div class="spell-meta">
+        <div class="sp-stat">
+          <div class="sp-val">Wisdom</div>
+          <div class="sp-lbl">Spellcasting Ability</div>
+        </div>
+        <div class="sp-stat">
+          <div class="sp-val">10</div>
+          <div class="sp-lbl">Spell Save DC</div>
+        </div>
+        <div class="sp-stat">
+          <div class="sp-val">+2</div>
+          <div class="sp-lbl">Spell Attack Bonus</div>
+        </div>
+      </div>
+
+      <div class="spell-lvl-row">Cantrips</div>
+      <div class="spell-chips">
+        <span class="spell-chip">Guidance</span>
+        <span class="spell-chip">Mending</span>
+      </div>
+
+      <div class="spell-lvl-row">
+        1st Level
+        <div class="slots">
+          <div class="slot" title="Slot 1"></div>
+          <div class="slot" title="Slot 2"></div>
+          <div class="slot" title="Slot 3"></div>
+        </div>
+        <span class="slot-count">(3 slots)</span>
+      </div>
+      <div class="avail-label">Prepared</div>
+      <div class="spell-chips">
+        <span class="spell-chip">Entangle</span>
+        <span class="spell-chip">Healing Word</span>
+        <span class="spell-chip">Cure Wounds</span>
+        <span class="spell-chip">Goodberry</span>
+        <span class="spell-chip">Faerie Fire</span>
+      </div>
+      <div class="avail-label">Available to Prepare</div>
+      <div class="spell-chips">
+        <span class="spell-chip avail">Absorb Elements</span>
+        <span class="spell-chip avail">Animal Friendship</span>
+        <span class="spell-chip avail">Beast Bond</span>
+        <span class="spell-chip avail">Charm Person</span>
+        <span class="spell-chip avail">Create or Destroy Water</span>
+        <span class="spell-chip avail ritual">Detect Magic</span>
+        <span class="spell-chip avail ritual">Detect Poison/Disease</span>
+        <span class="spell-chip avail">Earth Tremor</span>
+        <span class="spell-chip avail">Fog Cloud</span>
+        <span class="spell-chip avail ritual">Guiding Hand</span>
+        <span class="spell-chip avail">Ice Knife</span>
+        <span class="spell-chip avail">Jump</span>
+        <span class="spell-chip avail">Longstrider</span>
+        <span class="spell-chip avail ritual">Purify Food &amp; Drink</span>
+        <span class="spell-chip avail">Snare</span>
+        <span class="spell-chip avail ritual">Speak with Animals</span>
+        <span class="spell-chip avail">Thunderwave</span>
+        <span class="spell-chip avail ritual">Wild Cunning</span>
+      </div>
+
+      <div class="spell-lvl-row" style="color:var(--ink-mid); opacity:0.6;">
+        2nd Level
+        <span class="slot-count" style="font-style:italic;">&mdash; unlocks at druid level 3</span>
+      </div>
+      <div class="spell-chips">
+        <span class="spell-chip em">No 2nd-level slots yet &mdash; see spell reference</span>
+      </div>
+
+      <div style="font-size:0.62rem; color:var(--ink-mid); margin-top:6px; font-style:italic;">
+        Prepared spells: 5 (Wis mod +3 + level 2). Ritual casting available. <span style="color:var(--gold);">&#174;</span> = ritual spell. Full descriptions in <em>spells.html</em>.
+      </div>
+    </div>
+
+    <!-- Wild Shape -->
+    <div>
+      <div class="sbox">
+        <div class="stitle">&#9680; Wild Shape &mdash; Circle of the Moon</div>
+        <div class="ws-meta">
+          <strong>Uses:</strong> 2 / short rest &nbsp;|&nbsp; <strong>Max CR:</strong> 1<br>
+          No fly or swim speed (swim unlocks at level 4, fly at level 8)
+        </div>
+        <div class="ws-uses">
+          <div class="ws-dot" title="Use 1"></div>
+          <div class="ws-dot" title="Use 2"></div>
+          <span class="ws-hint">click to track</span>
+        </div>
+        <div class="ws-form">
+          <span class="ws-fn">Brown Bear</span>
+          <span class="ws-fs">CR 1 &middot; 34 HP &middot; +5 atk</span>
+        </div>
+        <div class="ws-form">
+          <span class="ws-fn">Dire Wolf</span>
+          <span class="ws-fs">CR 1 &middot; 37 HP &middot; Pack Tactics</span>
+        </div>
+        <div style="font-size:0.62rem; color:var(--ink-mid); margin-top:5px; font-style:italic;">
+          Bonus action to transform. Combat Wild Shape: use bonus action to expend spell slot for 1d8 HP per slot level while transformed.
+        </div>
+      </div>
+      <div class="sbox">
+        <div class="stitle">Proficiencies &amp; Languages</div>
+        <div class="prof-text">
+          <span class="pc">Armor:</span> Light, medium, shields (no metal)<br>
+          <span class="pc">Weapons:</span> Clubs, daggers, darts, javelins, maces, quarterstaffs, scimitars, sickles, slings, spears<br>
+          <span class="pc">Tools:</span> Herbalism kit, navigator's tools<br>
+          <span class="pc">Languages:</span> Common, Druidic, + 2 of your choice (1 from Human race, 1 from Failed Merchant)
+        </div>
+      </div>
+    </div>
+  </div><!-- /spell-grid -->
+
+  <!-- ═══ PERSONALITY + FEATURES ════════════════════════════════ -->
+  <div class="divider" style="margin-top:0.5rem;">
+    <div class="divider-line"></div>
+    <span class="divider-orn">&#9884;</span>
+    <div class="divider-line"></div>
+  </div>
+
+  <div class="bottom-grid">
+    <div class="sbox">
+      <div class="stitle">Features, Traits &amp; Background</div>
+      <div class="feat-item">
+        <div class="feat-name">Druidic</div>
+        <div class="feat-desc">You know Druidic, the secret language of druids. You can speak it and leave hidden messages. Others notice a message exists but can&rsquo;t decipher it without the language.</div>
+      </div>
+      <div class="feat-item">
+        <div class="feat-name">Spellcasting</div>
+        <div class="feat-desc">Cast prepared druid spells using Wisdom. Ritual casting available for spells with the ritual tag. Use druidic focus as spellcasting focus.</div>
+      </div>
+      <div class="feat-item">
+        <div class="feat-name">Combat Wild Shape</div>
+        <div class="feat-desc">Use Wild Shape as a bonus action. While transformed, use bonus action to expend a spell slot and regain 1d8 HP per slot level.</div>
+      </div>
+      <div class="feat-item">
+        <div class="feat-name">Merchant's Eye</div>
+        <div class="feat-desc">Years of trade give you a knack for appraising goods and reading people&rsquo;s intentions. You can usually estimate the value of common items and sense when a deal is too good to be true.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══ STONE CREST ════════════════════════════════════════════ -->
+  <div class="divider" style="margin-top:0.5rem;">
+    <div class="divider-line"></div>
+    <span class="divider-orn" style="color:#4a7a28;">&#10022;</span>
+    <span class="divider-orn" style="color:#4a7a28; font-size:1.1rem;">&#9753;</span>
+    <span class="divider-orn" style="color:#4a7a28;">&#10022;</span>
+    <div class="divider-line" style="background:linear-gradient(to right,transparent,#4a7a28 20%,#4a7a28 80%,transparent);"></div>
+  </div>
+
+  <div class="relic-card">
+    <div class="relic-header">
+      <span class="relic-name">Stone Crest</span>
+      <span class="relic-tag">Wondrous Item</span>
+      <span class="relic-tag">Quest Object</span>
+    </div>
+    <div class="relic-rule"></div>
+    <div class="relic-desc">
+      A palm-sized disc of pale grey stone, smooth on the back and carved on the face with interlocking symbols you do not fully recognise — yet somehow, unmistakably, <strong>understand</strong>. The weight of it in your hand feels deliberate. Purposeful. The symbols are not decorative.<br><br>
+      Each mark etched into the crest carries a resonance you feel as much as see: <strong>Growth.</strong> <strong>Stillness.</strong> <strong>The turning of seasons.</strong> <strong>The covenant between predator and prey.</strong> Together they form something greater than their parts — a language of <strong>primal harmony</strong>, older than any guild, older than any city wall. You are certain it speaks of balance, and of the sanctity of wild places.<br><br>
+      When you pass through land that has been corrupted or despoiled — where the soil is wrong, where animals have fled, where the trees grow in silence — you feel the crest <strong>grow faintly warm</strong> against your skin, as though straining toward the wound. Whatever power sleeps within it, it was made to <strong>restore what has been broken</strong>.
+    </div>
+  </div>
+
+  <!-- ═══ FOOTER ══════════════════════════════════════════════════ -->
+  <div class="divider" style="margin-top:1rem;">
+    <div class="divider-line"></div>
+    <span class="footer-text">D&amp;D 5E &nbsp;&middot;&nbsp; Level 2 &nbsp;&middot;&nbsp; Druid &nbsp;&middot;&nbsp; Circle of the Moon</span>
+    <div class="divider-line"></div>
+  </div>
+
+</div><!-- /page -->
+
+<script>
+  // Spell slot toggles
+  document.querySelectorAll('.slot').forEach(s => {
+    s.addEventListener('click', () => s.classList.toggle('used'));
+  });
+  // Wild shape use toggles
+  document.querySelectorAll('.ws-dot').forEach(d => {
+    d.addEventListener('click', () => d.classList.toggle('used'));
+  });
+  // Inspiration toggle
+  document.querySelector('.insp-box').addEventListener('click', function() {
+    this.style.background = this.style.background
+      ? '' : 'var(--crimson)';
+  });
+</script>
+</body>
+</html>

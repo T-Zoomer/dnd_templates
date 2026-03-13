@@ -250,6 +250,52 @@
       text-align: center;
       min-width: 54px;
     }
+    .stat-pill.yours {
+      background: rgba(122,27,27,0.08);
+      border-color: var(--crimson);
+    }
+
+    /* stat table */
+    .stat-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.72rem;
+      margin-bottom: 0.6rem;
+    }
+    .stat-table th {
+      font-family: 'Cinzel', serif;
+      font-size: 0.5rem;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: var(--crimson);
+      border-bottom: 1px solid var(--border-light);
+      padding: 2px 5px;
+      text-align: center;
+    }
+    .stat-table td {
+      padding: 3px 5px;
+      text-align: center;
+      border-bottom: 1px solid rgba(122,72,32,0.15);
+    }
+    .stat-table td:first-child {
+      text-align: left;
+      font-family: 'Cinzel', serif;
+      font-size: 0.58rem;
+      text-transform: uppercase;
+      letter-spacing: 0.07em;
+      color: var(--ink-mid);
+    }
+    .stat-table .val { font-family: 'Cinzel', serif; font-weight: 700; font-size: 0.8rem; }
+    .stat-table .from-beast { color: var(--green); }
+    .stat-table .from-you { color: var(--crimson); }
+    .stat-source {
+      font-size: 0.62rem;
+      color: var(--ink-mid);
+      font-style: italic;
+      margin-bottom: 0.5rem;
+    }
+    .stat-source span { color: var(--green); font-style: normal; font-weight: bold; }
+    .stat-source span.you { color: var(--crimson); }
     .stat-pill-val {
       font-family: 'Cinzel', serif;
       font-size: 0.95rem;
@@ -530,15 +576,22 @@
         <div class="stat-pill-val">50 ft</div>
         <div class="stat-pill-lbl">Speed</div>
       </div>
-      <div class="stat-pill">
-        <div class="stat-pill-val">+3</div>
-        <div class="stat-pill-lbl">STR mod</div>
-      </div>
-      <div class="stat-pill">
-        <div class="stat-pill-val">+3</div>
-        <div class="stat-pill-lbl">Perception</div>
-      </div>
     </div>
+
+    <div class="stat-source"><span>Green</span> = from the beast &nbsp;|&nbsp; <span class="you">Red</span> = your own stat (kept)</div>
+    <table class="stat-table">
+      <thead>
+        <tr><th>Stat</th><th>Modifier</th><th>Source</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>STR</td><td class="val from-beast">+3</td><td>Beast (16)</td></tr>
+        <tr><td>DEX</td><td class="val from-beast">+2</td><td>Beast (14)</td></tr>
+        <tr><td>CON</td><td class="val from-beast">+2</td><td>Beast (14)</td></tr>
+        <tr><td>INT</td><td class="val from-you">+1</td><td>Yours &mdash; hyena is &minus;4!</td></tr>
+        <tr><td>WIS</td><td class="val from-you">+3</td><td>Yours &mdash; hyena is +1</td></tr>
+        <tr><td>CHA</td><td class="val from-you">&minus;1</td><td>Yours</td></tr>
+      </tbody>
+    </table>
 
     <div class="atk-section-title">Attack</div>
 
@@ -593,13 +646,24 @@
         <div class="stat-pill-val">30 ft</div>
         <div class="stat-pill-lbl">Climb</div>
       </div>
-      <div class="stat-pill">
-        <div class="stat-pill-val">+3</div>
-        <div class="stat-pill-lbl">STR mod</div>
-      </div>
     </div>
 
-    <div class="atk-section-title">Attacks &mdash; Multiattack: make both attacks each turn</div>
+    <div class="stat-source"><span>Green</span> = from the beast &nbsp;|&nbsp; <span class="you">Red</span> = your own stat (kept)</div>
+    <table class="stat-table">
+      <thead>
+        <tr><th>Stat</th><th>Modifier</th><th>Source</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>STR</td><td class="val from-beast">+3</td><td>Beast (16)</td></tr>
+        <tr><td>DEX</td><td class="val from-beast">+2</td><td>Beast (14)</td></tr>
+        <tr><td>CON</td><td class="val from-beast">+2</td><td>Beast (14)</td></tr>
+        <tr><td>INT</td><td class="val from-you">+1</td><td>Yours &mdash; ape is &minus;2!</td></tr>
+        <tr><td>WIS</td><td class="val from-you">+3</td><td>Yours &mdash; ape is +1</td></tr>
+        <tr><td>CHA</td><td class="val from-you">&minus;1</td><td>Yours</td></tr>
+      </tbody>
+    </table>
+
+    <div class="atk-section-title">Attacks &mdash; Multiattack: two separate rolls each turn</div>
 
     <div class="atk-block">
       <div class="atk-name-row">
@@ -617,7 +681,7 @@
         </div>
       </div>
       <div class="atk-explain">
-        Roll d20 + <strong>5</strong> to hit. On a hit, roll <strong>1 six-sided die</strong> and add <strong>3</strong>. Average 6.5 per hit &mdash; both fists together average <strong>13</strong>.
+        Roll d20 + <strong>5</strong> to hit. On a hit, roll <strong>1d6</strong> (one six-sided die) and add <strong>3</strong>. You do this <em>twice</em> per turn (multiattack = two separate to-hit rolls, two separate damage rolls). Average 6.5 per fist &mdash; both together average <strong>13</strong>.
       </div>
     </div>
 

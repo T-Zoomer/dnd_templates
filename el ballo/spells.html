@@ -156,7 +156,7 @@
       <span class="rule-icon">&#9654;</span>
       <div>
         <span class="rule-label">Magical Secrets spells</span>
-        Spirit Guardians and Greater Restoration are marked <strong>MS</strong> — they are not normally on the bard spell list. You learned them through Magical Secrets at level 10.
+        Spirit Guardians and Counterspell are marked <strong>MS</strong> — they are not normally on the bard spell list (both are Cleric/Wizard spells). You learned them through Magical Secrets at level 10. Greater Restoration is a native 5th-level bard spell and needs no special feature.
       </div>
     </div>
     <div class="rule-item">
@@ -372,8 +372,8 @@
         <span><span class="mk">Duration</span> Instantaneous</span>
         <span><span class="mk">Components</span> V only</span>
       </div>
-      <div class="desc-text">A creature you can see within range regains <strong>1d4 &minus; 1 HP</strong> (minimum 0). No effect on undead or constructs. Bonus action means you can still cast another spell this turn, as long as it&rsquo;s a cantrip.</div>
-      <div class="upcast"><strong>Higher levels:</strong> +1d4 per slot level above 1st.</div>
+      <div class="desc-text">A creature you can see within range regains <strong>1d4 + 4 HP</strong> (your Charisma modifier). No effect on undead or constructs. Bonus action means you can still cast another spell this turn, as long as it&rsquo;s a cantrip.</div>
+      <div class="upcast"><strong>Higher levels:</strong> +1d4 per slot level above 1st (modifier stays the same).</div>
     </div>
   </details>
 
@@ -403,7 +403,7 @@
   <details>
     <summary>
       <span class="sname">Counterspell</span>
-      <span class="badges"><span class="badge react">Reaction</span></span>
+      <span class="badges"><span class="badge react">Reaction</span><span class="badge ms">Magical Secrets</span></span>
     </summary>
     <div class="spell-body">
       <div class="meta">
@@ -414,7 +414,7 @@
         <span><span class="mk">Components</span> S only</span>
         <span><span class="mk">Trigger</span> When a creature within 60 ft casts a spell</span>
       </div>
-      <div class="desc-text">Attempt to interrupt a creature in the process of casting a spell. If the spell is 3rd level or lower, it automatically fails. If the spell is 4th level or higher, make an ability check using your spellcasting ability (Charisma), DC 10 + spell level. On success, the creature&rsquo;s spell fails. <strong>Note:</strong> Creatures charmed by Mantle of Majesty automatically fail saves vs. Command, but Counterspell is separate.</div>
+      <div class="desc-text">Attempt to interrupt a creature in the process of casting a spell. If the spell is 3rd level or lower, it automatically fails. If the spell is 4th level or higher, make an ability check using your spellcasting ability (Charisma), DC 10 + spell level. Your total: <strong>+6</strong> (CHA +4 &plus; Jack of All Trades +2). On success, the creature&rsquo;s spell fails. <strong>Note:</strong> Creatures charmed by Mantle of Majesty automatically fail saves vs. Command, but Counterspell is separate.</div>
       <div class="upcast"><strong>Higher levels:</strong> Automatically counters spells up to the slot level used (4th, 5th, etc.).</div>
     </div>
   </details>
@@ -498,7 +498,6 @@
   <details>
     <summary>
       <span class="sname">Greater Restoration</span>
-      <span class="badges"><span class="badge ms">Magical Secrets</span></span>
     </summary>
     <div class="spell-body">
       <div class="meta">

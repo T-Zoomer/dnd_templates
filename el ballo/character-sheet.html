@@ -1,0 +1,656 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>D&amp;D 5e — El Ballo Character Sheet</title>
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700;900&family=Cinzel+Decorative:wght@400;700&family=IM+Fell+English:ital@0;1&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --parchment:       #f0e2b8;
+      --parchment-light: #f9f0d6;
+      --parchment-dark:  #c9a96e;
+      --ink:             #1c0e06;
+      --ink-mid:         #3d200e;
+      --crimson:         #5c1580;
+      --crimson-dark:    #3d0f58;
+      --gold:            #8b6a14;
+      --gold-light:      #b08a28;
+      --border:          #7a4820;
+      --border-light:    #a07040;
+      --fill-dot:        #1c0e06;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      background: #1a0d05;
+      background-image:
+        radial-gradient(ellipse at 30% 20%, #2e1508 0%, transparent 60%),
+        radial-gradient(ellipse at 70% 80%, #2e1508 0%, transparent 60%);
+      font-family: 'IM Fell English', Georgia, serif;
+      color: var(--ink);
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+      padding: 2.5rem 1rem;
+    }
+
+    .page {
+      position: relative;
+      width: 100%;
+      max-width: 980px;
+      padding: 2.2rem 2.2rem 2rem;
+      background-color: var(--parchment);
+      background-image:
+        url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='400' height='400'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='400' height='400' filter='url(%23n)' opacity='0.06'/%3E%3C/svg%3E"),
+        radial-gradient(ellipse at 15% 10%,  rgba(160,110,40,0.25) 0%, transparent 45%),
+        radial-gradient(ellipse at 85% 90%,  rgba(140, 90,30,0.20) 0%, transparent 45%),
+        radial-gradient(ellipse at 50% 50%,  rgba(200,160,80,0.10) 0%, transparent 70%),
+        repeating-linear-gradient(0deg, transparent, transparent 3px, rgba(139,100,50,0.025) 3px, rgba(139,100,50,0.025) 4px),
+        linear-gradient(160deg, #f8edcc 0%, #e8d4a4 30%, #f3e7c0 55%, #dfc99a 78%, #f0e2b8 100%);
+      box-shadow:
+        0 0 0 2px var(--border),
+        0 0 0 7px var(--parchment-dark),
+        0 0 0 9px var(--border),
+        0 25px 70px rgba(0,0,0,0.75);
+    }
+
+    .page::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+      background-image:
+        radial-gradient(circle at 2% 2%,   rgba(100,60,10,0.18) 0%, transparent 25%),
+        radial-gradient(circle at 98% 2%,  rgba(100,60,10,0.14) 0%, transparent 22%),
+        radial-gradient(circle at 2% 98%,  rgba(100,60,10,0.18) 0%, transparent 22%),
+        radial-gradient(circle at 98% 98%, rgba(100,60,10,0.14) 0%, transparent 20%);
+    }
+
+    .corner { position: absolute; font-size: 1.4rem; color: var(--border); opacity: 0.55; line-height: 1; pointer-events: none; }
+    .corner-tl { top: 10px; left: 14px; }
+    .corner-tr { top: 10px; right: 14px; transform: scaleX(-1); }
+    .corner-bl { bottom: 10px; left: 14px; transform: scaleY(-1); }
+    .corner-br { bottom: 10px; right: 14px; transform: scale(-1,-1); }
+
+    .divider { display: flex; align-items: center; gap: 0.8rem; margin: 0.6rem 0; }
+    .divider-line { flex: 1; height: 1.5px; background: linear-gradient(to right, transparent, var(--border) 20%, var(--border) 80%, transparent); }
+    .divider-orn { color: var(--crimson); font-size: 1rem; flex-shrink: 0; }
+
+    .sheet-badge {
+      text-align: center;
+      font-family: 'Cinzel Decorative', serif;
+      font-size: 0.7rem;
+      font-weight: 400;
+      color: var(--crimson);
+      letter-spacing: 0.35em;
+      text-transform: uppercase;
+      margin-bottom: 0.35rem;
+    }
+
+    .identity-row { display: grid; gap: 0.5rem; margin-top: 0.5rem; }
+    .identity-row-1 { grid-template-columns: 2.4fr 1.7fr 1fr 1fr; }
+    .identity-row-2 { grid-template-columns: 1fr 1fr 1fr 1fr; }
+
+    .field { border-bottom: 1.5px solid var(--border); padding-bottom: 2px; }
+    .field-val { font-family: 'IM Fell English', serif; font-size: 0.92rem; color: var(--ink); min-height: 1.3em; padding: 1px 3px; }
+    .field-val.blank { color: transparent; border-bottom: 1px solid var(--border-light); }
+    .field-lbl { font-family: 'Cinzel', serif; font-size: 0.52rem; color: var(--crimson); letter-spacing: 0.12em; text-transform: uppercase; margin-top: 2px; }
+
+    .main-grid { display: grid; grid-template-columns: 152px 1fr 1fr; gap: 0.9rem; margin-top: 0.8rem; }
+
+    .sbox { border: 1.5px solid var(--border); border-radius: 3px; padding: 0.45rem 0.55rem 0.5rem; background: rgba(255,255,255,0.12); margin-bottom: 0.6rem; }
+    .sbox:last-child { margin-bottom: 0; }
+    .stitle { font-family: 'Cinzel', serif; font-size: 0.57rem; font-weight: 700; letter-spacing: 0.16em; text-transform: uppercase; color: var(--crimson-dark); text-align: center; border-bottom: 1px solid var(--border-light); padding-bottom: 3px; margin-bottom: 0.45rem; }
+
+    .abilities { display: flex; flex-direction: column; gap: 0.35rem; }
+    .ability { display: flex; flex-direction: column; align-items: center; border: 1.5px solid var(--border); border-radius: 3px; padding: 3px 6px 5px; background: linear-gradient(180deg, var(--parchment-light) 0%, var(--parchment) 100%); }
+    .ability.primary { border-color: var(--crimson); }
+    .ab-name { font-family: 'Cinzel', serif; font-size: 0.48rem; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: var(--crimson); }
+    .ab-mod { font-family: 'Cinzel', serif; font-size: 1.55rem; font-weight: 900; color: var(--ink); line-height: 1.05; margin: 1px 0; }
+    .ability.primary .ab-mod { color: var(--crimson); }
+    .ab-circle { width: 34px; height: 34px; border: 1.5px solid var(--border); border-radius: 50%; display: flex; align-items: center; justify-content: center; background: var(--parchment-light); }
+    .ability.primary .ab-circle { border-color: var(--crimson); }
+    .ab-score { font-family: 'Cinzel', serif; font-size: 0.82rem; font-weight: 600; color: var(--ink); }
+    .ability.primary .ab-score { color: var(--crimson); }
+    .dot.exp { background: var(--fill-dot); border-color: var(--fill-dot); outline: 2.5px solid var(--fill-dot); outline-offset: 2px; }
+    .dot-tag { font-family: 'Cinzel', serif; font-size: 0.44rem; letter-spacing: 0.06em; color: var(--crimson); margin-left: 2px; font-weight: 700; }
+
+    .insp-box { width: 28px; height: 28px; border: 2px solid var(--border); border-radius: 3px; background: var(--parchment-light); margin: 2px auto; cursor: pointer; transition: background 0.15s; }
+    .insp-box:hover { background: rgba(92,21,128,0.15); }
+
+    .racial-note { font-size: 0.62rem; color: var(--ink-mid); font-style: italic; line-height: 1.45; margin-top: 4px; text-align: center; }
+
+    .combat-row { display: flex; justify-content: space-around; gap: 0.4rem; }
+    .cstat { display: flex; flex-direction: column; align-items: center; flex: 1; }
+    .cstat-val { font-family: 'Cinzel', serif; font-size: 1.35rem; font-weight: 700; color: var(--ink); border: 1.5px solid var(--border); border-radius: 3px; padding: 1px 8px; background: var(--parchment-light); min-width: 52px; text-align: center; }
+    .cstat-lbl { font-family: 'Cinzel', serif; font-size: 0.47rem; text-transform: uppercase; letter-spacing: 0.09em; color: var(--crimson); margin-top: 2px; text-align: center; }
+
+    .hp-row { display: flex; gap: 0.6rem; align-items: flex-end; }
+    .hp-max { font-family: 'Cinzel', serif; font-size: 2rem; font-weight: 900; color: var(--crimson); line-height: 1; }
+    .hp-cur { flex: 1; border: 1.5px solid var(--border); height: 36px; border-radius: 3px; background: var(--parchment-light); }
+    .hp-sub { font-family: 'Cinzel', serif; font-size: 0.5rem; color: var(--ink-mid); text-transform: uppercase; letter-spacing: 0.08em; }
+    .hp-dice { font-family: 'Cinzel', serif; font-size: 0.75rem; font-weight: 600; color: var(--ink); margin-top: 4px; }
+
+    .dot-row { display: flex; align-items: center; gap: 5px; padding: 1.5px 0; font-size: 0.73rem; }
+    .dot { width: 9px; height: 9px; border-radius: 50%; border: 1.5px solid var(--border); flex-shrink: 0; }
+    .dot.filled { background: var(--fill-dot); border-color: var(--fill-dot); }
+    .dot-name { flex: 1; }
+    .dot-sub { font-size: 0.58rem; color: var(--ink-mid); font-style: italic; }
+    .dot-val { font-family: 'Cinzel', serif; font-size: 0.72rem; font-weight: 600; min-width: 22px; text-align: right; }
+    .passive { font-size: 0.6rem; font-style: italic; color: var(--ink-mid); margin-top: 3px; }
+
+    .atk-table { width: 100%; border-collapse: collapse; font-size: 0.73rem; }
+    .atk-table th { font-family: 'Cinzel', serif; font-size: 0.52rem; text-transform: uppercase; letter-spacing: 0.1em; color: var(--crimson); border-bottom: 1.5px solid var(--border); padding: 2px 4px; text-align: left; }
+    .atk-table td { padding: 3px 4px; border-bottom: 1px solid rgba(122,72,32,0.28); }
+    .atk-note { font-size: 0.58rem; color: var(--ink-mid); font-style: italic; margin-top: 3px; }
+
+    .eq-chips { display: flex; flex-wrap: wrap; gap: 3px; }
+    .eq-chip { font-size: 0.7rem; background: rgba(139,105,20,0.10); border: 1px solid var(--border-light); border-radius: 2px; padding: 1px 7px; }
+    .gp { font-family: 'Cinzel', serif; font-size: 0.78rem; margin-top: 6px; }
+    .gp-icon { color: var(--gold); }
+
+    .col { display: flex; flex-direction: column; gap: 0.6rem; }
+
+    /* Spellcasting section */
+    .spell-meta { display: flex; justify-content: space-between; margin-bottom: 0.5rem; }
+    .sp-stat { text-align: center; }
+    .sp-val { font-family: 'Cinzel', serif; font-size: 1rem; font-weight: 700; color: var(--ink); }
+    .sp-lbl { font-family: 'Cinzel', serif; font-size: 0.45rem; text-transform: uppercase; letter-spacing: 0.08em; color: var(--crimson); }
+
+    .spell-lvl-row { display: flex; align-items: center; gap: 7px; font-family: 'Cinzel', serif; font-size: 0.6rem; font-weight: 700; color: var(--crimson); text-transform: uppercase; letter-spacing: 0.1em; margin: 0.5rem 0 0.25rem; }
+    .slots { display: flex; gap: 4px; }
+    .slot { width: 13px; height: 13px; border-radius: 50%; border: 1.5px solid var(--border); cursor: pointer; transition: background 0.15s; flex-shrink: 0; }
+    .slot:hover { background: rgba(92,21,128,0.2); }
+    .slot.used { background: var(--fill-dot); border-color: var(--fill-dot); }
+    .slot-count { font-size: 0.52rem; font-weight: normal; color: var(--ink-mid); font-style: italic; }
+
+    .spell-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 0.9rem; margin-top: 0.2rem; }
+    .spell-left { grid-column: 1 / 3; }
+    .bottom-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 0.9rem; margin-top: 0.2rem; }
+
+    .prof-text { font-size: 0.7rem; line-height: 1.6; }
+    .pc { font-family: 'Cinzel', serif; font-size: 0.56rem; color: var(--crimson); text-transform: uppercase; letter-spacing: 0.08em; font-weight: 700; }
+
+    .pers-item { margin-bottom: 0.5rem; }
+    .pers-lbl { font-family: 'Cinzel', serif; font-size: 0.52rem; text-transform: uppercase; letter-spacing: 0.12em; color: var(--crimson); font-weight: 700; }
+    .pers-text { font-size: 0.72rem; line-height: 1.45; font-style: italic; }
+
+    .feat-item { margin-bottom: 0.45rem; }
+    .feat-name { font-family: 'Cinzel', serif; font-size: 0.62rem; font-weight: 700; color: var(--crimson); text-transform: uppercase; letter-spacing: 0.08em; }
+    .feat-desc { font-size: 0.7rem; line-height: 1.45; margin-top: 1px; }
+
+    /* By Popular Demand card */
+    .bpd-card {
+      border: 2px solid var(--gold-light);
+      border-radius: 3px;
+      background: rgba(139,106,20,0.07);
+      padding: 0.65rem 0.75rem 0.7rem;
+      position: relative;
+      overflow: hidden;
+    }
+    .bpd-card::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+      background-image:
+        radial-gradient(ellipse at 8% 15%,  rgba(180,140,20,0.12) 0%, transparent 50%),
+        radial-gradient(ellipse at 92% 85%, rgba(160,120,10,0.08) 0%, transparent 50%);
+    }
+    .bpd-header { display: flex; align-items: baseline; gap: 0.6rem; margin-bottom: 0.4rem; }
+    .bpd-name { font-family: 'Cinzel', serif; font-size: 0.85rem; font-weight: 700; color: #5a3d00; letter-spacing: 0.1em; text-transform: uppercase; }
+    .bpd-tag { font-family: 'Cinzel', serif; font-size: 0.47rem; text-transform: uppercase; letter-spacing: 0.14em; color: var(--gold); border: 1px solid var(--gold); border-radius: 2px; padding: 1px 5px; }
+    .bpd-rule { height: 1px; background: linear-gradient(to right, var(--gold-light), rgba(176,138,40,0.15)); margin-bottom: 0.45rem; }
+    .bpd-desc { font-size: 0.73rem; line-height: 1.65; font-style: italic; color: var(--ink); }
+    .bpd-desc strong { font-style: normal; font-family: 'Cinzel', serif; font-size: 0.63rem; color: #5a3d00; font-weight: 700; letter-spacing: 0.05em; }
+
+    .footer-text { font-family: 'Cinzel', serif; font-size: 0.5rem; letter-spacing: 0.25em; color: var(--ink-mid); text-transform: uppercase; }
+
+    @media print {
+      body { background: white; padding: 0; }
+      .page { box-shadow: none; max-width: 100%; padding: 1rem; }
+      .page::after { display: none; }
+    }
+    @media (max-width: 640px) {
+      body { padding: 0.5rem 0.25rem; }
+      .page { padding: 1rem 0.75rem; }
+      .corner { display: none; }
+      .identity-row-1, .identity-row-2 { grid-template-columns: 1fr 1fr; }
+      .main-grid { grid-template-columns: 1fr; }
+      .spell-grid { grid-template-columns: 1fr; }
+      .spell-left { grid-column: 1; }
+      .bottom-grid { grid-template-columns: 1fr; }
+      .abilities { display: grid; grid-template-columns: repeat(3, 1fr); gap: 0.3rem; }
+      .combat-row { flex-wrap: wrap; }
+      .hp-row { flex-wrap: wrap; }
+      .hp-cur { min-width: 80px; }
+    }
+  </style>
+</head>
+<body>
+<div class="page">
+  <span class="corner corner-tl">&#10147;</span>
+  <span class="corner corner-tr">&#10147;</span>
+  <span class="corner corner-bl">&#10147;</span>
+  <span class="corner corner-br">&#10147;</span>
+
+  <!-- HEADER -->
+  <div class="sheet-badge">Dungeons &amp; Dragons &mdash; Fifth Edition &mdash; Character Record</div>
+  <div class="divider">
+    <div class="divider-line"></div>
+    <span class="divider-orn">&#9834;</span>
+    <span class="divider-orn" style="font-size:1.3rem;">&#9830;</span>
+    <span class="divider-orn">&#9834;</span>
+    <div class="divider-line"></div>
+  </div>
+
+  <div class="identity-row identity-row-1">
+    <div class="field">
+      <div class="field-val">Balthazar &ldquo;El Ballo&rdquo; Damagucci</div>
+      <div class="field-lbl">Character Name</div>
+    </div>
+    <div class="field">
+      <div class="field-val">Bard (College of Glamour) 10</div>
+      <div class="field-lbl">Class &amp; Level</div>
+    </div>
+    <div class="field">
+      <div class="field-val">Entertainer</div>
+      <div class="field-lbl">Background</div>
+    </div>
+    <div class="field">
+      <div class="field-val">Thijmen</div>
+      <div class="field-lbl">Player Name</div>
+    </div>
+  </div>
+  <div class="identity-row identity-row-2" style="margin-top:0.4rem;">
+    <div class="field">
+      <div class="field-val">Forest Gnome</div>
+      <div class="field-lbl">Race</div>
+    </div>
+    <div class="field">
+      <div class="field-val blank">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</div>
+      <div class="field-lbl">Alignment</div>
+    </div>
+    <div class="field">
+      <div class="field-val">64,000 / 85,000</div>
+      <div class="field-lbl">Experience Points</div>
+    </div>
+    <div class="field">
+      <div class="field-val" style="font-family:'Cinzel',serif; font-weight:700; color:var(--crimson);">+4</div>
+      <div class="field-lbl">Proficiency Bonus</div>
+    </div>
+  </div>
+
+  <div class="divider" style="margin-top:0.9rem;">
+    <div class="divider-line"></div>
+    <span class="divider-orn">&#9884;</span>
+    <div class="divider-line"></div>
+  </div>
+
+  <!-- MAIN 3-COLUMN -->
+  <div class="main-grid">
+
+    <!-- LEFT: ABILITY SCORES -->
+    <div>
+      <div class="sbox">
+        <div class="stitle">Ability Scores</div>
+        <div class="abilities">
+          <div class="ability">
+            <div class="ab-name">Strength</div>
+            <div class="ab-mod">&minus;1</div>
+            <div class="ab-circle"><span class="ab-score">8</span></div>
+          </div>
+          <div class="ability">
+            <div class="ab-name">Dexterity</div>
+            <div class="ab-mod">+2</div>
+            <div class="ab-circle"><span class="ab-score">14</span></div>
+          </div>
+          <div class="ability">
+            <div class="ab-name">Constitution</div>
+            <div class="ab-mod">+1</div>
+            <div class="ab-circle"><span class="ab-score">12</span></div>
+          </div>
+          <div class="ability">
+            <div class="ab-name">Intelligence</div>
+            <div class="ab-mod">+1</div>
+            <div class="ab-circle"><span class="ab-score">12</span></div>
+          </div>
+          <div class="ability">
+            <div class="ab-name">Wisdom</div>
+            <div class="ab-mod">+2</div>
+            <div class="ab-circle"><span class="ab-score">14</span></div>
+          </div>
+          <div class="ability primary">
+            <div class="ab-name">Charisma</div>
+            <div class="ab-mod">+4</div>
+            <div class="ab-circle"><span class="ab-score">19</span></div>
+          </div>
+        </div>
+      </div>
+      <div class="sbox">
+        <div class="stitle">Inspiration</div>
+        <div class="insp-box" title="Click to mark Inspiration"></div>
+      </div>
+      <div class="sbox">
+        <div class="stitle">Gnomish Cunning</div>
+        <div class="racial-note">Advantage on Int, Wis &amp; Cha saving throws vs. magic</div>
+      </div>
+    </div>
+
+    <!-- MIDDLE COLUMN -->
+    <div class="col">
+      <div class="sbox">
+        <div class="stitle">Combat</div>
+        <div class="combat-row">
+          <div class="cstat">
+            <div class="cstat-val">14</div>
+            <div class="cstat-lbl">Armor Class</div>
+          </div>
+          <div class="cstat">
+            <div class="cstat-val">+2</div>
+            <div class="cstat-lbl">Initiative</div>
+          </div>
+          <div class="cstat">
+            <div class="cstat-val">25</div>
+            <div class="cstat-lbl">Speed (ft)</div>
+          </div>
+        </div>
+        <div style="font-size:0.62rem; color:var(--ink-mid); text-align:center; margin-top:5px; font-style:italic;">Darkvision 60 ft</div>
+      </div>
+
+      <div class="sbox">
+        <div class="stitle">Hit Points</div>
+        <div class="hp-row">
+          <div>
+            <div class="hp-sub">Maximum</div>
+            <div class="hp-max">63</div>
+          </div>
+          <div style="flex:1;">
+            <div class="hp-sub">Current HP</div>
+            <div class="hp-cur"></div>
+          </div>
+          <div>
+            <div class="hp-sub">Temporary HP</div>
+            <div class="hp-cur" style="width:60px;"></div>
+          </div>
+        </div>
+        <div class="hp-dice">Hit Dice: <strong>10d8</strong></div>
+      </div>
+
+      <div class="sbox">
+        <div class="stitle">Saving Throws</div>
+        <div class="dot-row"><span class="dot"></span><span class="dot-name">Strength</span><span class="dot-val">&minus;1</span></div>
+        <div class="dot-row"><span class="dot filled"></span><span class="dot-name">Dexterity</span><span class="dot-val">+6</span></div>
+        <div class="dot-row"><span class="dot"></span><span class="dot-name">Constitution</span><span class="dot-val">+1</span></div>
+        <div class="dot-row"><span class="dot"></span><span class="dot-name">Intelligence</span><span class="dot-val">+1</span></div>
+        <div class="dot-row"><span class="dot"></span><span class="dot-name">Wisdom</span><span class="dot-val">+2</span></div>
+        <div class="dot-row"><span class="dot filled"></span><span class="dot-name">Charisma</span><span class="dot-val">+8</span></div>
+        <div class="passive" style="margin-top:4px; font-size:0.58rem;">&#43; Advantage on all saves vs. magic (Gnomish Cunning)</div>
+      </div>
+
+      <div class="sbox">
+        <div class="stitle">Attacks &amp; Cantrips</div>
+        <table class="atk-table">
+          <thead>
+            <tr>
+              <th>Name</th>
+              <th>To Hit / Save</th>
+              <th>Damage / Type</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr><td>Magic Mike</td><td>+8</td><td>1d8+5</td></tr>
+            <tr><td>Vicious Mockery</td><td>Wis DC 16</td><td>2d4 psychic</td></tr>
+            <tr><td>Hand Crossbow</td><td>+6</td><td>1d6+2 piercing</td></tr>
+          </tbody>
+        </table>
+        <div class="atk-note">Magic Mike: magical weapon. Vicious Mockery: on fail, target has disadvantage on its next attack roll (60 ft, V only).</div>
+      </div>
+
+      <div class="sbox">
+        <div class="stitle">Equipment</div>
+        <div class="eq-chips">
+          <span class="eq-chip">Studded Leather</span>
+          <span class="eq-chip" style="border-color:var(--gold-light); color:#5a3d00; font-style:italic;">Magic Mike</span>
+          <span class="eq-chip">Hand Crossbow</span>
+          <span class="eq-chip">Longsword</span>
+          <span class="eq-chip">Shortsword</span>
+          <span class="eq-chip">Triangle (music.)</span>
+          <span class="eq-chip">Flute (music.)</span>
+          <span class="eq-chip">Disguise Kit</span>
+          <span class="eq-chip">Fine Clothes</span>
+          <span class="eq-chip">Costume</span>
+        </div>
+        <div class="gp"><span class="gp-icon">&#11042;</span> &nbsp;— gp (Aristocratic lifestyle: 10+ gp/day)</div>
+      </div>
+    </div>
+
+    <!-- RIGHT COLUMN: SKILLS -->
+    <div class="col">
+      <div class="sbox">
+        <div class="stitle">Skills</div>
+        <div class="dot-row"><span class="dot filled"></span><span class="dot-name">Acrobatics <span class="dot-sub">(Dex)</span> <span class="dot-tag">BG</span></span><span class="dot-val">+6</span></div>
+        <div class="dot-row"><span class="dot"></span><span class="dot-name">Animal Handling <span class="dot-sub">(Wis)</span></span><span class="dot-val">+4</span></div>
+        <div class="dot-row"><span class="dot exp"></span><span class="dot-name">Arcana <span class="dot-sub">(Int)</span> <span class="dot-tag">EXP</span></span><span class="dot-val">+9</span></div>
+        <div class="dot-row"><span class="dot"></span><span class="dot-name">Athletics <span class="dot-sub">(Str)</span></span><span class="dot-val">+1</span></div>
+        <div class="dot-row"><span class="dot exp"></span><span class="dot-name">Deception <span class="dot-sub">(Cha)</span> <span class="dot-tag">EXP</span></span><span class="dot-val">+12</span></div>
+        <div class="dot-row"><span class="dot"></span><span class="dot-name">History <span class="dot-sub">(Int)</span></span><span class="dot-val">+3</span></div>
+        <div class="dot-row"><span class="dot"></span><span class="dot-name">Insight <span class="dot-sub">(Wis)</span></span><span class="dot-val">+4</span></div>
+        <div class="dot-row"><span class="dot"></span><span class="dot-name">Intimidation <span class="dot-sub">(Cha)</span></span><span class="dot-val">+6</span></div>
+        <div class="dot-row"><span class="dot"></span><span class="dot-name">Investigation <span class="dot-sub">(Int)</span></span><span class="dot-val">+3</span></div>
+        <div class="dot-row"><span class="dot"></span><span class="dot-name">Medicine <span class="dot-sub">(Wis)</span></span><span class="dot-val">+4</span></div>
+        <div class="dot-row"><span class="dot"></span><span class="dot-name">Nature <span class="dot-sub">(Int)</span></span><span class="dot-val">+3</span></div>
+        <div class="dot-row"><span class="dot"></span><span class="dot-name">Perception <span class="dot-sub">(Wis)</span></span><span class="dot-val">+4</span></div>
+        <div class="dot-row"><span class="dot exp"></span><span class="dot-name">Performance <span class="dot-sub">(Cha)</span> <span class="dot-tag">BG · EXP</span></span><span class="dot-val">+12</span></div>
+        <div class="dot-row"><span class="dot exp"></span><span class="dot-name">Persuasion <span class="dot-sub">(Cha)</span> <span class="dot-tag">EXP</span></span><span class="dot-val">+12</span></div>
+        <div class="dot-row"><span class="dot"></span><span class="dot-name">Religion <span class="dot-sub">(Int)</span></span><span class="dot-val">+3</span></div>
+        <div class="dot-row"><span class="dot"></span><span class="dot-name">Sleight of Hand <span class="dot-sub">(Dex)</span></span><span class="dot-val">+4</span></div>
+        <div class="dot-row"><span class="dot"></span><span class="dot-name">Stealth <span class="dot-sub">(Dex)</span></span><span class="dot-val">+4</span></div>
+        <div class="dot-row"><span class="dot"></span><span class="dot-name">Survival <span class="dot-sub">(Wis)</span></span><span class="dot-val">+4</span></div>
+        <div class="passive">&#11835; Passive Perception: 14 &nbsp;&middot;&nbsp; filled dot = proficient &nbsp;&middot;&nbsp; ringed dot = expertise (×2 prof) &nbsp;&middot;&nbsp; BG = background &nbsp;&middot;&nbsp; others get +2 (Jack of All Trades)</div>
+      </div>
+    </div>
+  </div><!-- /main-grid -->
+
+  <!-- SPELLCASTING + PROFICIENCIES -->
+  <div class="divider" style="margin-top:0.8rem;">
+    <div class="divider-line"></div>
+    <span class="divider-orn">&#9834;</span>
+    <span class="divider-orn" style="font-size:1.3rem;">&#9830;</span>
+    <span class="divider-orn">&#9834;</span>
+    <div class="divider-line"></div>
+  </div>
+
+  <div class="spell-grid">
+    <div class="sbox spell-left">
+      <div class="stitle">Spellcasting &mdash; Bard (Charisma)</div>
+      <div class="spell-meta">
+        <div class="sp-stat">
+          <div class="sp-val">Charisma</div>
+          <div class="sp-lbl">Spellcasting Ability</div>
+        </div>
+        <div class="sp-stat">
+          <div class="sp-val">16</div>
+          <div class="sp-lbl">Spell Save DC</div>
+        </div>
+        <div class="sp-stat">
+          <div class="sp-val">+8</div>
+          <div class="sp-lbl">Spell Attack Bonus</div>
+        </div>
+        <div class="sp-stat">
+          <div class="sp-val">12</div>
+          <div class="sp-lbl">Spells Known</div>
+        </div>
+      </div>
+
+      <div style="font-size:0.62rem; color:var(--ink-mid); margin-bottom:6px; font-style:italic;">
+        Bards <strong>know</strong> their spells permanently — no daily preparation needed. All listed spells are always available to cast using a spell slot.
+      </div>
+
+      <div class="spell-lvl-row">
+        1st Level
+        <div class="slots">
+          <div class="slot"></div><div class="slot"></div><div class="slot"></div><div class="slot"></div>
+        </div>
+        <span class="slot-count">(4 slots)</span>
+      </div>
+
+      <div class="spell-lvl-row">
+        2nd Level
+        <div class="slots">
+          <div class="slot"></div><div class="slot"></div><div class="slot"></div>
+        </div>
+        <span class="slot-count">(3 slots)</span>
+      </div>
+
+      <div class="spell-lvl-row">
+        3rd Level
+        <div class="slots">
+          <div class="slot"></div><div class="slot"></div><div class="slot"></div>
+        </div>
+        <span class="slot-count">(3 slots)</span>
+      </div>
+
+      <div class="spell-lvl-row">
+        4th Level
+        <div class="slots">
+          <div class="slot"></div><div class="slot"></div><div class="slot"></div>
+        </div>
+        <span class="slot-count">(3 slots)</span>
+      </div>
+
+      <div class="spell-lvl-row">
+        5th Level
+        <div class="slots">
+          <div class="slot"></div><div class="slot"></div>
+        </div>
+        <span class="slot-count">(2 slots)</span>
+      </div>
+
+      <div style="font-size:0.62rem; color:var(--ink-mid); margin-top:6px; font-style:italic;">
+        All slots reset on long rest. Full spell descriptions in <em>spells.html</em>. Forest Gnome also knows Minor Illusion (Int-based, DC 11).
+      </div>
+    </div>
+
+    <!-- Proficiencies -->
+    <div>
+      <div class="sbox">
+        <div class="stitle">Proficiencies &amp; Languages</div>
+        <div class="prof-text">
+          <span class="pc">Armor:</span> Light<br>
+          <span class="pc">Weapons:</span> Simple weapons, hand crossbow, longsword, rapier, shortsword<br>
+          <span class="pc">Tools:</span> Triangle musical instrument, Flute, Disguise kit<br>
+          <span class="pc">Languages:</span> Common, Gnomish
+        </div>
+      </div>
+      <div class="sbox">
+        <div class="stitle">Actions in Combat</div>
+        <div class="prof-text">
+          <span class="pc">Action:</span> Countercharm (performance; allies w/in 30 ft have adv. vs frightened/charmed)<br>
+          <span class="pc">Bonus:</span> Bardic Inspiration (d10, 4 uses/SR, 60 ft) &bull; Mantle of Inspiration &bull; Mantle of Majesty (Command, no slot)<br>
+          <span class="pc">Reaction:</span> Counterspell
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- PERSONALITY + FEATURES -->
+  <div class="divider" style="margin-top:0.5rem;">
+    <div class="divider-line"></div>
+    <span class="divider-orn">&#9884;</span>
+    <div class="divider-line"></div>
+  </div>
+
+  <div class="bottom-grid">
+    <div class="sbox">
+      <div class="stitle">Personality &amp; Background</div>
+      <div class="pers-item">
+        <div class="pers-lbl">Personality</div>
+        <div class="pers-text">A Forest Gnome of extraordinary self-regard. Balthazar performs under the name &ldquo;El Ballo,&rdquo; which he considers far more befitting of his talent than anything nature gave him. He speaks of himself in superlatives, dresses in the finest clothes available, and regards every audience as lucky to have him.</div>
+      </div>
+      <div class="pers-item">
+        <div class="pers-lbl">Flaw</div>
+        <div class="pers-text">Arrogant and snobbish. Used to luxury. If lodgings are below aristocratic standard, he makes his displeasure loudly known.</div>
+      </div>
+      <div class="pers-item">
+        <div class="pers-lbl">Lifestyle</div>
+        <div class="pers-text">Aristocratic &mdash; 10 gp/day minimum.</div>
+      </div>
+    </div>
+
+    <div class="sbox">
+      <div class="stitle">Features &amp; Traits</div>
+      <div class="feat-item">
+        <div class="feat-name">Spellcasting</div>
+        <div class="feat-desc">Cast bard spells using Charisma. Use a musical instrument as a spellcasting focus. Bard spells are always known — no daily preparation required.</div>
+      </div>
+      <div class="feat-item">
+        <div class="feat-name">Jack of All Trades</div>
+        <div class="feat-desc">Add half proficiency (+2) to any ability check that doesn&rsquo;t already include your proficiency bonus.</div>
+      </div>
+      <div class="feat-item">
+        <div class="feat-name">Song of Rest</div>
+        <div class="feat-desc">Allies who spend HD during a short rest and can hear your performance heal an extra 1d8 HP.</div>
+      </div>
+      <div class="feat-item">
+        <div class="feat-name">Expertise</div>
+        <div class="feat-desc">Double proficiency bonus in 4 chosen skills (2 at level 3, 2 at level 10).</div>
+      </div>
+      <div class="feat-item">
+        <div class="feat-name">Magical Secrets</div>
+        <div class="feat-desc">Learned Spirit Guardians and Greater Restoration from outside the bard spell list (+2 more at levels 14 and 18).</div>
+      </div>
+      <div class="feat-item">
+        <div class="feat-name">Natural Illusionist (Gnome)</div>
+        <div class="feat-desc">Know Minor Illusion as a cantrip, using Intelligence as the spellcasting ability.</div>
+      </div>
+      <div class="feat-item">
+        <div class="feat-name">Speak with Small Beasts (Gnome)</div>
+        <div class="feat-desc">Communicate simple ideas with Small or smaller beasts through sounds and gestures.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- BY POPULAR DEMAND CARD -->
+  <div class="divider" style="margin-top:0.5rem;">
+    <div class="divider-line"></div>
+    <span class="divider-orn" style="color:var(--gold);">&#9834;</span>
+    <span class="divider-orn" style="color:var(--gold); font-size:1.1rem;">&#9830;</span>
+    <span class="divider-orn" style="color:var(--gold);">&#9834;</span>
+    <div class="divider-line" style="background:linear-gradient(to right,transparent,var(--gold-light) 20%,var(--gold-light) 80%,transparent);"></div>
+  </div>
+
+  <div class="bpd-card">
+    <div class="bpd-header">
+      <span class="bpd-name">By Popular Demand</span>
+      <span class="bpd-tag">Background Feature</span>
+      <span class="bpd-tag">Entertainer</span>
+    </div>
+    <div class="bpd-rule"></div>
+    <div class="bpd-desc">
+      I can always find a place to perform &mdash; inn, tavern, circus, noble court &mdash; where I receive <strong>free lodging and food</strong> of a modest or comfortable standard, as long as I perform each night.<br><br>
+      My performances make me <strong>something of a local figure</strong>. When strangers recognize me in a town where I have performed, they typically take a liking to me.
+    </div>
+  </div>
+
+  <!-- FOOTER -->
+  <div class="divider" style="margin-top:1rem;">
+    <div class="divider-line"></div>
+    <span class="footer-text">D&amp;D 5E &nbsp;&middot;&nbsp; Level 10 &nbsp;&middot;&nbsp; Bard &nbsp;&middot;&nbsp; College of Glamour</span>
+    <div class="divider-line"></div>
+  </div>
+
+</div>
+
+<script>
+  document.querySelectorAll('.slot').forEach(s => {
+    s.addEventListener('click', () => s.classList.toggle('used'));
+  });
+  document.querySelector('.insp-box').addEventListener('click', function() {
+    this.style.background = this.style.background ? '' : 'var(--crimson)';
+  });
+</script>
+</body>
+</html>

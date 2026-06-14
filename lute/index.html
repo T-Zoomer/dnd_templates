@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Lute — D&D Sheets</title>
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&family=IM+Fell+English:ital@0;1&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --parchment:      #f0e2b8;
+      --parchment-light:#f9f0d6;
+      --parchment-dark: #c9a96e;
+      --ink:            #1c0e06;
+      --ink-mid:        #3d200e;
+      --crimson:        #7c1c1c;
+      --crimson-dark:   #5a1010;
+      --border:         #7a4820;
+      --border-light:   #a07040;
+      --green:          #2e5c14;
+      --green-light:    #4a7a28;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      background: #1a0d05;
+      font-family: 'IM Fell English', Georgia, serif;
+      color: var(--ink);
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 1.5rem 0.75rem;
+    }
+
+    .page {
+      width: 100%;
+      max-width: 480px;
+      background: var(--parchment);
+      background-image: linear-gradient(160deg, #f8edcc 0%, #e8d4a4 30%, #f3e7c0 60%, #dfc99a 100%);
+      border: 1.5px solid var(--border);
+      box-shadow: 0 0 0 5px var(--parchment-dark), 0 0 0 7px var(--border), 0 20px 60px rgba(0,0,0,0.7);
+      padding: 2rem 1.75rem;
+      text-align: center;
+    }
+
+    .badge {
+      font-family: 'Cinzel', serif;
+      font-size: 0.58rem;
+      letter-spacing: 0.3em;
+      text-transform: uppercase;
+      color: var(--crimson);
+      margin-bottom: 0.3rem;
+    }
+
+    .char-name {
+      font-family: 'Cinzel', serif;
+      font-size: 2rem;
+      font-weight: 700;
+      color: var(--ink);
+      letter-spacing: 0.08em;
+      line-height: 1.1;
+    }
+
+    .char-sub {
+      font-family: 'IM Fell English', serif;
+      font-size: 0.85rem;
+      color: var(--ink-mid);
+      font-style: italic;
+      margin-top: 0.2rem;
+    }
+
+    .divider {
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+      margin: 1.1rem 0;
+    }
+    .divider-line {
+      flex: 1;
+      height: 1.5px;
+      background: linear-gradient(to right, transparent, var(--border) 20%, var(--border) 80%, transparent);
+    }
+    .divider-orn { color: var(--crimson); font-size: 0.9rem; }
+
+    .sheets { display: flex; flex-direction: column; gap: 0.65rem; }
+
+    .sheet-link {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      padding: 0.85rem 1.1rem;
+      border: 1.5px solid var(--border);
+      border-radius: 4px;
+      background: rgba(255,255,255,0.1);
+      text-decoration: none;
+      color: var(--ink);
+      transition: background 0.15s, border-color 0.15s;
+    }
+    .sheet-link:hover {
+      background: rgba(255,255,255,0.25);
+      border-color: var(--border-light);
+    }
+    .sheet-link.green {
+      border-color: var(--green-light);
+      background: rgba(34,80,34,0.07);
+    }
+    .sheet-link.green:hover { background: rgba(34,80,34,0.14); }
+
+    .sheet-icon {
+      font-size: 1.5rem;
+      flex-shrink: 0;
+      width: 2rem;
+      text-align: center;
+    }
+    .sheet-info { text-align: left; }
+    .sheet-title {
+      font-family: 'Cinzel', serif;
+      font-size: 0.85rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: var(--crimson);
+    }
+    .sheet-link.green .sheet-title { color: var(--green); }
+    .sheet-desc {
+      font-size: 0.72rem;
+      color: var(--ink-mid);
+      font-style: italic;
+      margin-top: 1px;
+    }
+    .sheet-arrow {
+      margin-left: auto;
+      color: var(--border-light);
+      font-size: 0.9rem;
+      flex-shrink: 0;
+    }
+
+    .footer {
+      font-family: 'Cinzel', serif;
+      font-size: 0.48rem;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--ink-mid);
+      margin-top: 1.25rem;
+    }
+
+    @media (max-width: 400px) {
+      .page { padding: 1.5rem 1rem; }
+      .char-name { font-size: 1.6rem; }
+    }
+  </style>
+</head>
+<body>
+<div class="page">
+
+  <div class="badge">Dungeons &amp; Dragons &mdash; Fifth Edition</div>
+  <div class="char-name">Lute</div>
+  <div class="char-sub">Human Druid &mdash; Circle of the Moon &mdash; Level 2</div>
+
+  <div class="divider">
+    <div class="divider-line"></div>
+    <span class="divider-orn">&#9830;</span>
+    <div class="divider-line"></div>
+  </div>
+
+  <div class="sheets">
+    <a class="sheet-link" href="character-sheet.html">
+      <span class="sheet-icon">&#9776;</span>
+      <div class="sheet-info">
+        <div class="sheet-title">Character Sheet</div>
+        <div class="sheet-desc">Stats, combat, skills, equipment</div>
+      </div>
+      <span class="sheet-arrow">&#8250;</span>
+    </a>
+
+    <a class="sheet-link" href="spells.html">
+      <span class="sheet-icon">&#10022;</span>
+      <div class="sheet-info">
+        <div class="sheet-title">Spells</div>
+        <div class="sheet-desc">Spell slots, prepared spells, full descriptions</div>
+      </div>
+      <span class="sheet-arrow">&#8250;</span>
+    </a>
+
+    <a class="sheet-link green" href="wildshape.html">
+      <span class="sheet-icon">&#9680;</span>
+      <div class="sheet-info">
+        <div class="sheet-title">Wild Shape</div>
+        <div class="sheet-desc">Beast forms, uses tracker, rules</div>
+      </div>
+      <span class="sheet-arrow">&#8250;</span>
+    </a>
+  </div>
+
+  <div class="divider">
+    <div class="divider-line"></div>
+  </div>
+
+  <div class="footer">Failed Merchant &nbsp;&middot;&nbsp; Player: Thijmen</div>
+
+</div>
+</body>
+</html>

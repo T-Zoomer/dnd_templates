@@ -1,0 +1,587 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>El Ballo — Spells</title>
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&family=IM+Fell+English:ital@0;1&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --parchment:      #f0e2b8;
+      --parchment-light:#f9f0d6;
+      --parchment-dark: #c9a96e;
+      --ink:            #1c0e06;
+      --ink-mid:        #3d200e;
+      --crimson:        #5c1580;
+      --crimson-dark:   #3d0f58;
+      --gold:           #8b6a14;
+      --border:         #7a4820;
+      --border-light:   #a07040;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      background: #1a0d05;
+      font-family: 'IM Fell English', Georgia, serif;
+      color: var(--ink);
+      min-height: 100vh;
+      padding: 1.5rem 0.75rem;
+    }
+
+    .page {
+      max-width: 720px;
+      margin: 0 auto;
+      background: var(--parchment);
+      background-image: linear-gradient(160deg, #f8edcc 0%, #e8d4a4 30%, #f3e7c0 60%, #dfc99a 100%);
+      border: 1.5px solid var(--border);
+      box-shadow: 0 0 0 5px var(--parchment-dark), 0 0 0 7px var(--border), 0 20px 60px rgba(0,0,0,0.7);
+      padding: 1.5rem 1.25rem;
+    }
+
+    .page-title { font-family: 'Cinzel', serif; font-size: 1.4rem; font-weight: 700; color: var(--crimson); text-align: center; letter-spacing: 0.1em; text-transform: uppercase; }
+    .page-sub { font-family: 'Cinzel', serif; font-size: 0.6rem; color: var(--ink-mid); text-align: center; letter-spacing: 0.2em; text-transform: uppercase; margin-top: 3px; }
+
+    .divider { display: flex; align-items: center; gap: 0.6rem; margin: 0.75rem 0; }
+    .divider-line { flex: 1; height: 1.5px; background: linear-gradient(to right, transparent, var(--border) 20%, var(--border) 80%, transparent); }
+    .divider-orn { color: var(--crimson); font-size: 0.9rem; flex-shrink: 0; }
+
+    .info-box { border: 1.5px solid var(--border); border-radius: 4px; background: rgba(255,255,255,0.1); padding: 0.75rem 1rem; margin-bottom: 0.75rem; }
+    .section-title { font-family: 'Cinzel', serif; font-size: 0.62rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.14em; color: var(--crimson-dark); border-bottom: 1px solid var(--border-light); padding-bottom: 4px; margin-bottom: 0.6rem; text-align: center; }
+    .rule-item { display: flex; gap: 0.5rem; margin-bottom: 0.45rem; font-size: 0.77rem; line-height: 1.5; }
+    .rule-item:last-child { margin-bottom: 0; }
+    .rule-icon { flex-shrink: 0; color: var(--crimson); width: 1em; text-align: center; }
+    .rule-label { font-family: 'Cinzel', serif; font-size: 0.57rem; font-weight: 700; color: var(--crimson); text-transform: uppercase; letter-spacing: 0.08em; display: block; margin-bottom: 1px; }
+
+    .spell-stats { display: flex; gap: 0.5rem; flex-wrap: wrap; margin-bottom: 0.75rem; }
+    .sp-pill { flex: 1; min-width: 80px; background: rgba(255,255,255,0.3); border: 1px solid var(--border-light); border-radius: 3px; padding: 5px 8px; text-align: center; }
+    .sp-pill-val { font-family: 'Cinzel', serif; font-size: 1rem; font-weight: 700; color: var(--ink); line-height: 1.1; }
+    .sp-pill-lbl { font-family: 'Cinzel', serif; font-size: 0.44rem; text-transform: uppercase; letter-spacing: 0.09em; color: var(--crimson); margin-top: 1px; }
+
+    .slot-box { background: rgba(92,21,128,0.05); border: 1.5px solid var(--crimson); border-radius: 4px; padding: 0.75rem 1rem; margin-bottom: 0.75rem; }
+    .slot-box-title { font-family: 'Cinzel', serif; font-size: 0.65rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.14em; color: var(--crimson); margin-bottom: 0.5rem; }
+    .slot-row { display: flex; align-items: center; gap: 0.6rem; margin-bottom: 0.4rem; flex-wrap: wrap; }
+    .slot-row:last-child { margin-bottom: 0; }
+    .slot-lbl { font-family: 'Cinzel', serif; font-size: 0.6rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; color: var(--ink-mid); min-width: 70px; }
+    .slot-dots { display: flex; gap: 6px; }
+    .slot { width: 24px; height: 24px; border-radius: 50%; border: 2px solid var(--crimson); background: var(--parchment-light); cursor: pointer; transition: background 0.15s; flex-shrink: 0; }
+    .slot:hover { background: rgba(92,21,128,0.15); }
+    .slot.used { background: var(--crimson); border-color: var(--crimson-dark); }
+    .slot-note { font-size: 0.65rem; color: var(--ink-mid); font-style: italic; }
+
+    .level-heading { font-family: 'Cinzel', serif; font-size: 0.7rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.12em; color: var(--parchment-light); background: var(--crimson-dark); padding: 5px 10px; border-radius: 3px; margin: 0.9rem 0 0.4rem; }
+    .level-heading.gnome { background: #4a3500; }
+
+    details { border-bottom: 1px solid rgba(122,72,32,0.3); background: rgba(255,255,255,0.06); }
+    details:first-of-type { border-top: 1px solid rgba(122,72,32,0.3); }
+    details[open] { background: rgba(255,255,255,0.15); }
+
+    summary { padding: 8px 10px; cursor: pointer; list-style: none; display: flex; align-items: center; gap: 6px; line-height: 1.3; }
+    summary::-webkit-details-marker { display: none; }
+    summary::before { content: '▸'; font-size: 0.65rem; color: var(--crimson); flex-shrink: 0; }
+    details[open] summary::before { content: '▾'; }
+
+    .sname { font-family: 'Cinzel', serif; font-size: 0.78rem; font-weight: 600; flex: 1; color: var(--ink); }
+
+    .badges { display: flex; gap: 3px; flex-wrap: wrap; }
+    .badge { font-family: 'Cinzel', serif; font-size: 0.42rem; padding: 1px 5px; border-radius: 2px; font-weight: 700; white-space: nowrap; text-transform: uppercase; letter-spacing: 0.06em; }
+    .badge.conc   { background: rgba(40,60,140,0.10);  color: #2a4080; border: 1px solid #7090c0; }
+    .badge.ba     { background: rgba(20,80,20,0.10);   color: #1a5c1a; border: 1px solid #5a9a5a; }
+    .badge.react  { background: rgba(140,60,0,0.10);   color: #7a3000; border: 1px solid #c07040; }
+    .badge.save   { background: rgba(92,21,128,0.10);  color: var(--crimson); border: 1px solid var(--crimson); }
+    .badge.ms     { background: rgba(139,106,20,0.12); color: #5a3d00; border: 1px solid var(--gold); }
+
+    .spell-body { padding: 4px 12px 12px 22px; font-size: 0.73rem; line-height: 1.55; }
+    .meta { display: grid; grid-template-columns: 1fr 1fr; gap: 2px 12px; margin-bottom: 8px; font-size: 0.68rem; color: var(--ink-mid); }
+    .meta span { display: block; }
+    .meta .mk { font-family: 'Cinzel', serif; font-size: 0.5rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; color: var(--crimson); }
+    .desc-text { color: var(--ink); }
+    .upcast { margin-top: 6px; font-size: 0.68rem; color: var(--ink-mid); font-style: italic; }
+    .upcast strong { color: var(--crimson); font-style: normal; }
+
+    .nav-bar { display: flex; justify-content: center; gap: 1rem; margin-top: 1rem; }
+    .nav-link { font-family: 'Cinzel', serif; font-size: 0.58rem; text-transform: uppercase; letter-spacing: 0.14em; color: var(--crimson); text-decoration: none; }
+    .nav-link:hover { text-decoration: underline; }
+
+    @media (max-width: 480px) {
+      body { padding: 0.5rem 0.25rem; }
+      .page { padding: 1rem 0.85rem; }
+      .spell-stats { gap: 0.3rem; }
+      .sp-pill { min-width: 60px; }
+      .meta { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+<div class="page">
+
+  <div class="page-title">&#9834; Spells</div>
+  <div class="page-sub">El Ballo &nbsp;&middot;&nbsp; Bard 10 &nbsp;&middot;&nbsp; College of Glamour</div>
+
+  <div class="divider">
+    <div class="divider-line"></div>
+    <span class="divider-orn">&#9830;</span>
+    <div class="divider-line"></div>
+  </div>
+
+  <div class="spell-stats">
+    <div class="sp-pill">
+      <div class="sp-pill-val">Charisma</div>
+      <div class="sp-pill-lbl">Casting Ability</div>
+    </div>
+    <div class="sp-pill">
+      <div class="sp-pill-val">16</div>
+      <div class="sp-pill-lbl">Spell Save DC</div>
+    </div>
+    <div class="sp-pill">
+      <div class="sp-pill-val">+8</div>
+      <div class="sp-pill-lbl">Spell Attack Bonus</div>
+    </div>
+    <div class="sp-pill">
+      <div class="sp-pill-val">12</div>
+      <div class="sp-pill-lbl">Spells Known</div>
+    </div>
+  </div>
+
+  <div class="info-box">
+    <div class="section-title">How Known Spells Work (Bard)</div>
+    <div class="rule-item">
+      <span class="rule-icon">&#9654;</span>
+      <div>
+        <span class="rule-label">Always available — no preparation needed</span>
+        Unlike a druid or wizard, you don&rsquo;t choose spells each morning. All 12 of your known spells plus 4 cantrips are always available to cast. You can&rsquo;t swap them out except by levelling up.
+      </div>
+    </div>
+    <div class="rule-item">
+      <span class="rule-icon">&#9654;</span>
+      <div>
+        <span class="rule-label">Magical Secrets spells</span>
+        Spirit Guardians and Greater Restoration are marked <strong>MS</strong> — they are not normally on the bard spell list. You learned them through Magical Secrets at level 10.
+      </div>
+    </div>
+    <div class="rule-item">
+      <span class="rule-icon">&#9654;</span>
+      <div>
+        <span class="rule-label">Forest Gnome spells are separate</span>
+        Minor Illusion from your Gnome heritage uses <strong>Intelligence</strong> as the spellcasting ability (DC 11, +3 attack), not Charisma. It has no slots and can be cast freely.
+      </div>
+    </div>
+  </div>
+
+  <div class="info-box">
+    <div class="section-title">How Using Spells Works</div>
+    <div class="rule-item">
+      <span class="rule-icon">&#9654;</span>
+      <div>
+        <span class="rule-label">Spell slots are your fuel</span>
+        You have <strong>4/3/3/3/2</strong> slots (levels 1–5). Each time you cast a non-cantrip spell, you expend one slot of that level or higher. All slots reset on a long rest.
+      </div>
+    </div>
+    <div class="rule-item">
+      <span class="rule-icon">&#9654;</span>
+      <div>
+        <span class="rule-label">Upcasting</span>
+        You can cast a lower-level spell using a higher-level slot for a stronger effect. Each spell notes what changes when upcast.
+      </div>
+    </div>
+    <div class="rule-item">
+      <span class="rule-icon">&#9654;</span>
+      <div>
+        <span class="rule-label">Concentration</span>
+        Spells marked <strong>Conc</strong> require concentration. You can only concentrate on one spell at a time — casting a second ends the first. Taking damage forces a Con save (DC 10 or half damage, whichever is higher) or you lose concentration.
+      </div>
+    </div>
+    <div class="rule-item">
+      <span class="rule-icon">&#9654;</span>
+      <div>
+        <span class="rule-label">Counterspell is a reaction</span>
+        You can cast Counterspell as a reaction when you see a creature within 60 ft casting a spell. No slot needed for 3rd level or lower — automatic. For 4th level or higher, make a Charisma check (DC 10 + spell level) — your +4 CHA mod helps here.
+      </div>
+    </div>
+    <div class="rule-item">
+      <span class="rule-icon">&#9654;</span>
+      <div>
+        <span class="rule-label">Spell save DC &amp; attack bonus</span>
+        When a spell forces a save, the enemy rolls vs. <strong>DC 16</strong>. When a spell requires an attack roll, you roll d20 <strong>+8</strong> vs. their AC.
+      </div>
+    </div>
+  </div>
+
+  <!-- SLOT TRACKER -->
+  <div class="slot-box">
+    <div class="slot-box-title">Spell Slots &mdash; all reset on long rest</div>
+    <div class="slot-row">
+      <span class="slot-lbl">1st Level</span>
+      <div class="slot-dots">
+        <div class="slot"></div><div class="slot"></div><div class="slot"></div><div class="slot"></div>
+      </div>
+      <span class="slot-note">4 slots &mdash; tap to mark used</span>
+    </div>
+    <div class="slot-row">
+      <span class="slot-lbl">2nd Level</span>
+      <div class="slot-dots">
+        <div class="slot"></div><div class="slot"></div><div class="slot"></div>
+      </div>
+      <span class="slot-note">3 slots</span>
+    </div>
+    <div class="slot-row">
+      <span class="slot-lbl">3rd Level</span>
+      <div class="slot-dots">
+        <div class="slot"></div><div class="slot"></div><div class="slot"></div>
+      </div>
+      <span class="slot-note">3 slots</span>
+    </div>
+    <div class="slot-row">
+      <span class="slot-lbl">4th Level</span>
+      <div class="slot-dots">
+        <div class="slot"></div><div class="slot"></div><div class="slot"></div>
+      </div>
+      <span class="slot-note">3 slots</span>
+    </div>
+    <div class="slot-row">
+      <span class="slot-lbl">5th Level</span>
+      <div class="slot-dots">
+        <div class="slot"></div><div class="slot"></div>
+      </div>
+      <span class="slot-note">2 slots</span>
+    </div>
+  </div>
+
+  <div class="divider">
+    <div class="divider-line"></div>
+    <span class="divider-orn">&#9884;</span>
+    <div class="divider-line"></div>
+  </div>
+
+  <!-- CANTRIPS -->
+  <div class="level-heading">Cantrips &mdash; always available, no slot needed</div>
+
+  <details>
+    <summary>
+      <span class="sname">Mending</span>
+    </summary>
+    <div class="spell-body">
+      <div class="meta">
+        <span><span class="mk">School</span> Transmutation</span>
+        <span><span class="mk">Time</span> 1 minute</span>
+        <span><span class="mk">Range</span> Touch</span>
+        <span><span class="mk">Duration</span> Instantaneous</span>
+        <span><span class="mk">Components</span> V, S, M (two lodestones)</span>
+      </div>
+      <div class="desc-text">Repair a single break or tear in an object you touch, up to 1 foot in any dimension. Leaves no trace of former damage. Can physically repair a magic item or construct, but can&rsquo;t restore magic to such an object.</div>
+    </div>
+  </details>
+
+  <details>
+    <summary>
+      <span class="sname">Minor Illusion</span>
+    </summary>
+    <div class="spell-body">
+      <div class="meta">
+        <span><span class="mk">School</span> Illusion</span>
+        <span><span class="mk">Time</span> 1 action</span>
+        <span><span class="mk">Range</span> 30 ft</span>
+        <span><span class="mk">Duration</span> 1 minute</span>
+        <span><span class="mk">Components</span> S, M (fleece)</span>
+      </div>
+      <div class="desc-text">Create a sound or an image of an object within range. <strong>Sound:</strong> any sound of your choice, from a whisper to a scream, originating from a point you choose. <strong>Image:</strong> a visual image no larger than a 5-ft cube. It can&rsquo;t create sound, light, smell, or other sensory effects. A creature that uses its action to examine the image can detect the illusion with a successful Investigation check vs. your spell DC.</div>
+    </div>
+  </details>
+
+  <details>
+    <summary>
+      <span class="sname">Prestidigitation</span>
+    </summary>
+    <div class="spell-body">
+      <div class="meta">
+        <span><span class="mk">School</span> Transmutation</span>
+        <span><span class="mk">Time</span> 1 action</span>
+        <span><span class="mk">Range</span> 10 ft</span>
+        <span><span class="mk">Duration</span> Up to 1 hour</span>
+        <span><span class="mk">Components</span> V, S</span>
+      </div>
+      <div class="desc-text">Minor magical tricks. Choose one: create a small sensory effect (shower of sparks, puff of wind, faint music); instantly light or snuff a candle, torch, or small campfire; instantly clean or soil an object no larger than 1 cubic foot; chill, warm, or flavour up to 1 cubic foot of nonliving material for 1 hour; make a colour, small mark, or symbol appear on an object for 1 hour; create a nonmagical trinket or illusory image that fits in your hand and lasts until end of next turn.</div>
+    </div>
+  </details>
+
+  <details>
+    <summary>
+      <span class="sname">Vicious Mockery</span>
+      <span class="badges"><span class="badge save">Wis save</span></span>
+    </summary>
+    <div class="spell-body">
+      <div class="meta">
+        <span><span class="mk">School</span> Enchantment</span>
+        <span><span class="mk">Time</span> 1 action</span>
+        <span><span class="mk">Range</span> 60 ft</span>
+        <span><span class="mk">Duration</span> Instantaneous</span>
+        <span><span class="mk">Components</span> V only</span>
+      </div>
+      <div class="desc-text">Unleash a string of insults laced with subtle enchantments at one creature you can see within range. The creature must succeed on a Wisdom save or take <strong>2d4 psychic damage</strong> and have <strong>disadvantage on the next attack roll it makes</strong> before the end of its next turn.</div>
+    </div>
+  </details>
+
+  <!-- 1ST LEVEL -->
+  <div class="level-heading">1st Level &mdash; 4 slots</div>
+
+  <details>
+    <summary>
+      <span class="sname">Command</span>
+      <span class="badges"><span class="badge save">Wis save</span></span>
+    </summary>
+    <div class="spell-body">
+      <div class="meta">
+        <span><span class="mk">School</span> Enchantment</span>
+        <span><span class="mk">Time</span> 1 action</span>
+        <span><span class="mk">Range</span> 60 ft</span>
+        <span><span class="mk">Duration</span> 1 round</span>
+        <span><span class="mk">Components</span> V only</span>
+      </div>
+      <div class="desc-text">Speak a one-word command to a creature you can see within range. It must succeed on a Wisdom save or follow the command on its next turn. The spell has no effect if the target is undead, doesn&rsquo;t understand your language, or if your command is directly harmful to it. Examples: <em>approach, drop, flee, grovel, halt.</em></div>
+      <div class="upcast"><strong>Higher levels:</strong> +1 target per slot level above 1st (targets must be within 30 ft of each other).</div>
+    </div>
+  </details>
+
+  <details>
+    <summary>
+      <span class="sname">Faerie Fire</span>
+      <span class="badges"><span class="badge conc">Conc</span><span class="badge save">Dex save</span></span>
+    </summary>
+    <div class="spell-body">
+      <div class="meta">
+        <span><span class="mk">School</span> Evocation</span>
+        <span><span class="mk">Time</span> 1 action</span>
+        <span><span class="mk">Range</span> 60 ft</span>
+        <span><span class="mk">Duration</span> Conc, 1 minute</span>
+        <span><span class="mk">Components</span> V only</span>
+      </div>
+      <div class="desc-text">Each object in a 20-ft cube within range is outlined in blue, green, or violet light. Creatures in the area that fail a Dexterity save are also outlined. Outlined creatures and objects shed dim light in a 10-ft radius. Attack rolls against outlined targets have advantage, and outlined creatures can&rsquo;t benefit from being invisible.</div>
+    </div>
+  </details>
+
+  <details>
+    <summary>
+      <span class="sname">Healing Word</span>
+      <span class="badges"><span class="badge ba">Bonus action</span></span>
+    </summary>
+    <div class="spell-body">
+      <div class="meta">
+        <span><span class="mk">School</span> Evocation</span>
+        <span><span class="mk">Time</span> 1 bonus action</span>
+        <span><span class="mk">Range</span> 60 ft</span>
+        <span><span class="mk">Duration</span> Instantaneous</span>
+        <span><span class="mk">Components</span> V only</span>
+      </div>
+      <div class="desc-text">A creature you can see within range regains <strong>1d4 &minus; 1 HP</strong> (minimum 0). No effect on undead or constructs. Bonus action means you can still cast another spell this turn, as long as it&rsquo;s a cantrip.</div>
+      <div class="upcast"><strong>Higher levels:</strong> +1d4 per slot level above 1st.</div>
+    </div>
+  </details>
+
+  <!-- 2ND LEVEL -->
+  <div class="level-heading">2nd Level &mdash; 3 slots</div>
+
+  <details>
+    <summary>
+      <span class="sname">Suggestion</span>
+      <span class="badges"><span class="badge conc">Conc</span><span class="badge save">Wis save</span></span>
+    </summary>
+    <div class="spell-body">
+      <div class="meta">
+        <span><span class="mk">School</span> Enchantment</span>
+        <span><span class="mk">Time</span> 1 action</span>
+        <span><span class="mk">Range</span> 30 ft</span>
+        <span><span class="mk">Duration</span> Conc, 8 hours</span>
+        <span><span class="mk">Components</span> V, M (snake&rsquo;s tongue, honeycomb)</span>
+      </div>
+      <div class="desc-text">Suggest a course of activity (limited to a sentence or two) to a creature that can hear and understand you. It must make a Wisdom save or pursue the suggestion to the best of its ability for the duration. The suggestion must be worded so that it sounds reasonable &mdash; asking it to harm itself, or to do something obviously against its nature, ends the spell. The spell ends early if you or your companions harm the target.</div>
+    </div>
+  </details>
+
+  <!-- 3RD LEVEL -->
+  <div class="level-heading">3rd Level &mdash; 3 slots</div>
+
+  <details>
+    <summary>
+      <span class="sname">Counterspell</span>
+      <span class="badges"><span class="badge react">Reaction</span></span>
+    </summary>
+    <div class="spell-body">
+      <div class="meta">
+        <span><span class="mk">School</span> Abjuration</span>
+        <span><span class="mk">Time</span> 1 reaction*</span>
+        <span><span class="mk">Range</span> 60 ft</span>
+        <span><span class="mk">Duration</span> Instantaneous</span>
+        <span><span class="mk">Components</span> S only</span>
+        <span><span class="mk">Trigger</span> When a creature within 60 ft casts a spell</span>
+      </div>
+      <div class="desc-text">Attempt to interrupt a creature in the process of casting a spell. If the spell is 3rd level or lower, it automatically fails. If the spell is 4th level or higher, make an ability check using your spellcasting ability (Charisma), DC 10 + spell level. On success, the creature&rsquo;s spell fails. <strong>Note:</strong> Creatures charmed by Mantle of Majesty automatically fail saves vs. Command, but Counterspell is separate.</div>
+      <div class="upcast"><strong>Higher levels:</strong> Automatically counters spells up to the slot level used (4th, 5th, etc.).</div>
+    </div>
+  </details>
+
+  <details>
+    <summary>
+      <span class="sname">Hypnotic Pattern</span>
+      <span class="badges"><span class="badge conc">Conc</span><span class="badge save">Wis save</span></span>
+    </summary>
+    <div class="spell-body">
+      <div class="meta">
+        <span><span class="mk">School</span> Illusion</span>
+        <span><span class="mk">Time</span> 1 action</span>
+        <span><span class="mk">Range</span> 120 ft</span>
+        <span><span class="mk">Duration</span> Conc, 1 minute</span>
+        <span><span class="mk">Components</span> S, M (glowing stick or phosphorescent moss)</span>
+      </div>
+      <div class="desc-text">Create a twisting pattern of colours in a 30-ft cube within range. Each creature that can see the pattern must make a Wisdom save or be charmed for the duration. While charmed, the creature is <strong>incapacitated</strong> and has <strong>speed 0</strong>. The effect ends for an affected creature if it takes damage or if another creature uses its action to shake it out of its stupor.</div>
+    </div>
+  </details>
+
+  <details>
+    <summary>
+      <span class="sname">Major Image</span>
+      <span class="badges"><span class="badge conc">Conc</span></span>
+    </summary>
+    <div class="spell-body">
+      <div class="meta">
+        <span><span class="mk">School</span> Illusion</span>
+        <span><span class="mk">Time</span> 1 action</span>
+        <span><span class="mk">Range</span> 120 ft</span>
+        <span><span class="mk">Duration</span> Conc, 10 minutes</span>
+        <span><span class="mk">Components</span> V, S, M (fleece)</span>
+      </div>
+      <div class="desc-text">Create the image of an object, creature, or other visible phenomenon up to a 20&times;20&times;20 ft cube. The image appears at a spot within range and lasts for the duration. It seems real in all senses &mdash; sight, sound, smell, temperature &mdash; but can&rsquo;t cause damage or actually affect the physical world. A creature that interacts with the illusion or succeeds on an Investigation check vs. DC 11 realises it&rsquo;s fake. You can move the image anywhere within range as an action.</div>
+      <div class="upcast"><strong>6th level slot:</strong> The spell lasts until dispelled and doesn&rsquo;t require concentration. You can then dismiss it as an action.</div>
+    </div>
+  </details>
+
+  <details>
+    <summary>
+      <span class="sname">Spirit Guardians</span>
+      <span class="badges"><span class="badge conc">Conc</span><span class="badge save">Wis save</span><span class="badge ms">Magical Secrets</span></span>
+    </summary>
+    <div class="spell-body">
+      <div class="meta">
+        <span><span class="mk">School</span> Conjuration</span>
+        <span><span class="mk">Time</span> 1 action</span>
+        <span><span class="mk">Range</span> Self (15-ft radius)</span>
+        <span><span class="mk">Duration</span> Conc, 10 minutes</span>
+        <span><span class="mk">Components</span> V, S, M (holy symbol)</span>
+      </div>
+      <div class="desc-text">Spectral spirits swirl around you in a 15-ft radius. Choose creatures to affect when casting. Affected creatures entering the area for the first time on a turn or starting their turn there must make a Wisdom save: <strong>fail</strong> = 3d8 radiant or necrotic damage and speed halved; <strong>success</strong> = half damage, speed not halved.</div>
+      <div class="upcast"><strong>Higher levels:</strong> +1d8 damage per slot level above 3rd.</div>
+    </div>
+  </details>
+
+  <!-- 4TH LEVEL -->
+  <div class="level-heading">4th Level &mdash; 3 slots</div>
+
+  <details>
+    <summary>
+      <span class="sname">Polymorph</span>
+      <span class="badges"><span class="badge conc">Conc</span><span class="badge save">Wis save</span></span>
+    </summary>
+    <div class="spell-body">
+      <div class="meta">
+        <span><span class="mk">School</span> Transmutation</span>
+        <span><span class="mk">Time</span> 1 action</span>
+        <span><span class="mk">Range</span> 60 ft</span>
+        <span><span class="mk">Duration</span> Conc, 1 hour</span>
+        <span><span class="mk">Components</span> V, S, M (cocoon)</span>
+      </div>
+      <div class="desc-text">Transform a creature you can see within range into a new form. An unwilling creature must succeed on a Wisdom save to resist. The transformation can be into any beast with a CR equal to or less than the target&rsquo;s CR (or challenge rating, if it doesn&rsquo;t have a level). Game statistics are replaced by those of the chosen beast, but the creature retains its alignment and personality. The creature reverts if it drops to 0 HP, and any excess damage carries over to its normal form. <strong>Can be used on yourself</strong> — a powerful escape or utility option.</div>
+    </div>
+  </details>
+
+  <!-- 5TH LEVEL -->
+  <div class="level-heading">5th Level &mdash; 2 slots</div>
+
+  <details>
+    <summary>
+      <span class="sname">Greater Restoration</span>
+      <span class="badges"><span class="badge ms">Magical Secrets</span></span>
+    </summary>
+    <div class="spell-body">
+      <div class="meta">
+        <span><span class="mk">School</span> Abjuration</span>
+        <span><span class="mk">Time</span> 1 action</span>
+        <span><span class="mk">Range</span> Touch</span>
+        <span><span class="mk">Duration</span> Instantaneous</span>
+        <span><span class="mk">Components</span> V, S, M (diamond dust worth 100 gp, consumed)</span>
+      </div>
+      <div class="desc-text">Imbue a creature you touch with positive energy to undo a debilitating effect. Choose one: end one charmed or petrified condition; end one curse (including attunement to a cursed item); end one reduction to an ability score; end one effect reducing hit point maximum; or reduce the target&rsquo;s exhaustion level by one. <strong>Note:</strong> Requires 100 gp worth of diamond dust each cast.</div>
+    </div>
+  </details>
+
+  <details>
+    <summary>
+      <span class="sname">Modify Memory</span>
+      <span class="badges"><span class="badge conc">Conc</span><span class="badge save">Wis save</span></span>
+    </summary>
+    <div class="spell-body">
+      <div class="meta">
+        <span><span class="mk">School</span> Enchantment</span>
+        <span><span class="mk">Time</span> 1 action</span>
+        <span><span class="mk">Range</span> 30 ft</span>
+        <span><span class="mk">Duration</span> Conc, 1 minute</span>
+        <span><span class="mk">Components</span> V, S</span>
+      </div>
+      <div class="desc-text">Attempt to reshape another creature&rsquo;s memories. The target must make a Wisdom save or be charmed for the duration. While charmed, the target is incapacitated and unaware of its surroundings (though it can hear you). During that time, you can reach into the target&rsquo;s mind and alter one memory that occurred within the last 24 hours (up to 10 minutes long): suppress the memory, allow the creature to recall it with perfect clarity, change its details, or fabricate a false memory. When the spell ends, the target has no knowledge of being charmed.</div>
+      <div class="upcast"><strong>6th level:</strong> memories up to 7 days. <strong>7th:</strong> 30 days. <strong>8th:</strong> 1 year. <strong>9th:</strong> any time.</div>
+    </div>
+  </details>
+
+  <details>
+    <summary>
+      <span class="sname">Synaptic Static</span>
+      <span class="badges"><span class="badge save">Int save</span></span>
+    </summary>
+    <div class="spell-body">
+      <div class="meta">
+        <span><span class="mk">School</span> Enchantment</span>
+        <span><span class="mk">Time</span> 1 action</span>
+        <span><span class="mk">Range</span> 120 ft</span>
+        <span><span class="mk">Duration</span> 1 minute</span>
+        <span><span class="mk">Components</span> V, S</span>
+      </div>
+      <div class="desc-text">Choose a point you can see within range and cause psychic energy to explode there. Each creature in a 20-ft-radius sphere must make an Intelligence save. On a fail: <strong>8d6 psychic damage</strong>, and for the next minute they must roll a d6 and subtract the result from attack rolls, ability checks, and concentration saves. On a success: half damage, no ongoing penalty. No concentration required — it just lasts 1 minute on failed targets.</div>
+    </div>
+  </details>
+
+  <!-- GNOME SPELLS -->
+  <div class="level-heading gnome">Forest Gnome Racial Spell &mdash; Intelligence-based (DC 13, +5 attack)</div>
+
+  <details>
+    <summary>
+      <span class="sname">Minor Illusion</span>
+      <span class="badges" style="margin-left:auto;"><span style="font-size:0.6rem; color:var(--ink-mid); font-style:italic;">Always available &bull; Int-based</span></span>
+    </summary>
+    <div class="spell-body">
+      <div class="meta">
+        <span><span class="mk">Ability</span> Intelligence (not Charisma)</span>
+        <span><span class="mk">DC</span> 13 (8 + 4 prof + 1 INT)</span>
+        <span><span class="mk">Range</span> 30 ft</span>
+        <span><span class="mk">Duration</span> 1 minute</span>
+        <span><span class="mk">Components</span> S, M (fleece)</span>
+      </div>
+      <div class="desc-text">Identical to the bard cantrip version above, but this copy uses Intelligence as the casting ability. You effectively have Minor Illusion twice — one CHA-based, one INT-based — both free to cast with no slot. You can only concentrate on one active illusion at a time.</div>
+    </div>
+  </details>
+
+  <!-- nav -->
+  <div class="divider" style="margin-top:0.75rem;">
+    <div class="divider-line"></div>
+  </div>
+  <div class="nav-bar">
+    <a class="nav-link" href="character-sheet.html">&#8592; Character Sheet</a>
+    <a class="nav-link" href="inspiration.html">Bardic Inspiration &#8594;</a>
+  </div>
+
+</div>
+
+<script>
+  document.querySelectorAll('.slot-box .slot').forEach(s => {
+    s.addEventListener('click', () => s.classList.toggle('used'));
+  });
+</script>
+</body>
+</html>

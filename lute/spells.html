@@ -371,7 +371,7 @@
 <div class="page">
 
   <div class="page-title">&#10022; Spells</div>
-  <div class="page-sub">Lute &nbsp;&middot;&nbsp; Druid 2 &nbsp;&middot;&nbsp; Circle of the Moon</div>
+  <div class="page-sub">Lute &nbsp;&middot;&nbsp; Druid 3 &nbsp;&middot;&nbsp; Circle of the Moon</div>
 
   <div class="divider">
     <div class="divider-line"></div>
@@ -394,7 +394,7 @@
       <div class="sp-pill-lbl">Spell Attack Bonus</div>
     </div>
     <div class="sp-pill">
-      <div class="sp-pill-val">5</div>
+      <div class="sp-pill-val">6</div>
       <div class="sp-pill-lbl">Max Prepared</div>
     </div>
   </div>
@@ -413,7 +413,7 @@
       <span class="rule-icon">&#9654;</span>
       <div>
         <span class="rule-label">How many you can prepare</span>
-        Your maximum is <strong>Wisdom modifier + Druid level = 3 + 2 = 5 spells</strong>. Only prepared spells can be cast using spell slots.
+        Your maximum is <strong>Wisdom modifier + Druid level = 3 + 3 = 6 spells</strong>. Only prepared spells can be cast using spell slots.
       </div>
     </div>
     <div class="rule-item">
@@ -439,14 +439,14 @@
       <span class="rule-icon">&#9654;</span>
       <div>
         <span class="rule-label">Spell slots are your fuel</span>
-        You have <strong>3 first-level spell slots</strong>. Each time you cast a prepared spell, you expend one slot. Once all 3 are gone, you can&rsquo;t cast any more prepared spells until you take a long rest.
+        You have <strong>4 first-level spell slots and 2 second-level slots</strong>. Each time you cast a prepared spell, you expend one slot of the appropriate level or higher. Once all slots are gone, you can&rsquo;t cast any more prepared spells until you take a long rest.
       </div>
     </div>
     <div class="rule-item">
       <span class="rule-icon">&#9654;</span>
       <div>
         <span class="rule-label">Upcasting</span>
-        You only have 1st-level slots right now, so this doesn&rsquo;t apply yet. At higher levels you&rsquo;ll get 2nd-level slots and can cast a 1st-level spell using a higher slot for a stronger effect.
+        You now have 2nd-level slots. You can cast any 1st-level spell using a 2nd-level slot for a stronger effect — look for the <em>Higher levels</em> note on each spell.
       </div>
     </div>
     <div class="rule-item">
@@ -474,7 +474,7 @@
       <span class="rule-icon">&#9654;</span>
       <div>
         <span class="rule-label">Slots reset on long rest</span>
-        All 3 slots come back after a long rest (8 hours sleep). Nothing resets on a short rest except Wild Shape uses.
+        All slots (4× 1st, 2× 2nd) come back after a long rest (8 hours sleep). Nothing resets on a short rest except Wild Shape uses.
       </div>
     </div>
   </div>
@@ -488,22 +488,32 @@
         <div class="slot" title="Slot 1"></div>
         <div class="slot" title="Slot 2"></div>
         <div class="slot" title="Slot 3"></div>
+        <div class="slot" title="Slot 4"></div>
       </div>
-      <span class="slot-note">3 slots &mdash; tap to mark used</span>
+      <span class="slot-note">4 slots &mdash; tap to mark used</span>
+    </div>
+    <div class="slot-row">
+      <span class="slot-lbl">2nd Level</span>
+      <div class="slot-dots">
+        <div class="slot" title="Slot 1"></div>
+        <div class="slot" title="Slot 2"></div>
+      </div>
+      <span class="slot-note">2 slots &mdash; tap to mark used</span>
     </div>
   </div>
 
   <!-- ── PREPARED TRACKER ── -->
   <div class="prep-box">
-    <div class="prep-title">Prepared Spells &mdash; choose 5 after a long rest</div>
+    <div class="prep-title">Prepared Spells &mdash; choose 6 after a long rest</div>
     <div class="prep-slots">
       <div class="prep-slot" title="Prepared slot 1"></div>
       <div class="prep-slot" title="Prepared slot 2"></div>
       <div class="prep-slot" title="Prepared slot 3"></div>
       <div class="prep-slot" title="Prepared slot 4"></div>
       <div class="prep-slot" title="Prepared slot 5"></div>
+      <div class="prep-slot" title="Prepared slot 6"></div>
     </div>
-    <div class="prep-note">No spells prepared yet. Pick up to 5 from the 1st-level list below. Cantrips don&rsquo;t count against this limit.</div>
+    <div class="prep-note">No spells prepared yet. Pick up to 6 from the 1st- and 2nd-level lists below. Cantrips don&rsquo;t count against this limit.</div>
   </div>
 
   <div class="divider">
@@ -549,8 +559,8 @@
   </details>
 
   <!-- ══ 1ST LEVEL ══ -->
-  <div class="level-heading">1st Level &mdash; 3 slots &mdash; prepare up to 5</div>
-  <div class="group-label">Available to Prepare (0 of 5 chosen)</div>
+  <div class="level-heading">1st Level &mdash; 4 slots &mdash; prepare up to 6 total across all levels</div>
+  <div class="group-label">Available to Prepare (0 of 6 chosen)</div>
 
   <details class="avail">
     <summary>
@@ -947,6 +957,232 @@
         <span><span class="mk">Components</span> V, S</span>
       </div>
       <div class="desc-text">Call spirits of nature. Choose one: locate a nearby source of fresh water; locate edible plant food; locate a CR 1/2 or lower non-hostile creature; natural terrain doesn&rsquo;t impede your travel until your next turn; or ward yourself against natural hazards (+2 AC and Dex saves) until your next turn.</div>
+    </div>
+  </details>
+
+  <!-- ══ 2ND LEVEL ══ -->
+  <div class="level-heading">2nd Level &mdash; 2 slots</div>
+  <div class="group-label">Available to Prepare</div>
+
+  <details class="avail">
+    <summary>
+      <span class="sname">Barkskin</span>
+      <span class="badges"><span class="badge conc">Conc</span></span>
+    </summary>
+    <div class="spell-body">
+      <div class="meta">
+        <span><span class="mk">School</span> Transmutation</span>
+        <span><span class="mk">Time</span> 1 action</span>
+        <span><span class="mk">Range</span> Touch</span>
+        <span><span class="mk">Duration</span> Conc, 1 hour</span>
+        <span><span class="mk">Components</span> V, S, M (piece of bark)</span>
+      </div>
+      <div class="desc-text">You touch a willing creature. Until the spell ends, the target&rsquo;s skin has a rough, bark-like appearance, and the target&rsquo;s AC can&rsquo;t be less than 16, regardless of what kind of armor it is wearing.</div>
+    </div>
+  </details>
+
+  <details class="avail">
+    <summary>
+      <span class="sname">Darkvision</span>
+    </summary>
+    <div class="spell-body">
+      <div class="meta">
+        <span><span class="mk">School</span> Transmutation</span>
+        <span><span class="mk">Time</span> 1 action</span>
+        <span><span class="mk">Range</span> Touch</span>
+        <span><span class="mk">Duration</span> 8 hours</span>
+        <span><span class="mk">Components</span> V, S, M (dried carrot or agate)</span>
+      </div>
+      <div class="desc-text">You touch a willing creature to grant it darkvision. For the duration, the target can see in dim light within 60 ft as if it were bright light, and in darkness as if it were dim light. The target can&rsquo;t discern color in darkness, only shades of gray.</div>
+    </div>
+  </details>
+
+  <details class="avail">
+    <summary>
+      <span class="sname">Enhance Ability</span>
+      <span class="badges"><span class="badge conc">Conc</span></span>
+    </summary>
+    <div class="spell-body">
+      <div class="meta">
+        <span><span class="mk">School</span> Transmutation</span>
+        <span><span class="mk">Time</span> 1 action</span>
+        <span><span class="mk">Range</span> Touch</span>
+        <span><span class="mk">Duration</span> Conc, 1 hour</span>
+        <span><span class="mk">Components</span> V, S, M (fur or feather)</span>
+      </div>
+      <div class="desc-text">You touch a creature and bestow a magical enhancement. Choose one: <strong>Bear&rsquo;s Endurance</strong> (advantage on Con checks, +2d6 temp HP); <strong>Bull&rsquo;s Strength</strong> (advantage on Str checks, carrying capacity doubles); <strong>Cat&rsquo;s Grace</strong> (advantage on Dex checks, no falling damage up to 20 ft); <strong>Eagle&rsquo;s Splendor</strong> (advantage on Cha checks); <strong>Fox&rsquo;s Cunning</strong> (advantage on Int checks); <strong>Owl&rsquo;s Wisdom</strong> (advantage on Wis checks).</div>
+      <div class="upcast"><strong>Higher levels:</strong> +1 additional creature per slot level above 2nd.</div>
+    </div>
+  </details>
+
+  <details class="avail">
+    <summary>
+      <span class="sname">Flaming Sphere</span>
+      <span class="badges"><span class="badge conc">Conc</span><span class="badge save">Dex save</span></span>
+    </summary>
+    <div class="spell-body">
+      <div class="meta">
+        <span><span class="mk">School</span> Conjuration</span>
+        <span><span class="mk">Time</span> 1 action</span>
+        <span><span class="mk">Range</span> 60 ft</span>
+        <span><span class="mk">Duration</span> Conc, 1 min</span>
+        <span><span class="mk">Components</span> V, S, M (tallow, brimstone, powdered iron)</span>
+      </div>
+      <div class="desc-text">A 5-ft-diameter sphere of fire appears in an unoccupied space. Any creature that ends its turn within 5 ft makes a Dex save — fail: 2d6 fire damage; success: half. As a bonus action, you can move the sphere up to 30 ft. If you ram it into a creature, it makes the save and the sphere stops. The sphere sheds bright light 20 ft, dim light 20 ft further. Flammable objects in its path ignite.</div>
+      <div class="upcast"><strong>Higher levels:</strong> +1d6 per slot level above 2nd.</div>
+    </div>
+  </details>
+
+  <details class="avail">
+    <summary>
+      <span class="sname">Hold Person</span>
+      <span class="badges"><span class="badge conc">Conc</span><span class="badge save">Wis save</span></span>
+    </summary>
+    <div class="spell-body">
+      <div class="meta">
+        <span><span class="mk">School</span> Enchantment</span>
+        <span><span class="mk">Time</span> 1 action</span>
+        <span><span class="mk">Range</span> 60 ft</span>
+        <span><span class="mk">Duration</span> Conc, 1 min</span>
+        <span><span class="mk">Components</span> V, S, M (small iron bar)</span>
+      </div>
+      <div class="desc-text">Choose a humanoid you can see within range. The target must make a Wisdom save or be paralyzed for the duration. At end of each turn, the target repeats the save, ending the effect on a success. Paralyzed creature is incapacitated and can&rsquo;t move or speak. Attack rolls against it have advantage. Any attack from within 5 ft is a critical hit.</div>
+      <div class="upcast"><strong>Higher levels:</strong> +1 target per slot level above 2nd (each must be within 30 ft of each other).</div>
+    </div>
+  </details>
+
+  <details class="avail">
+    <summary>
+      <span class="sname">Lesser Restoration</span>
+    </summary>
+    <div class="spell-body">
+      <div class="meta">
+        <span><span class="mk">School</span> Abjuration</span>
+        <span><span class="mk">Time</span> 1 action</span>
+        <span><span class="mk">Range</span> Touch</span>
+        <span><span class="mk">Duration</span> Instantaneous</span>
+        <span><span class="mk">Components</span> V, S</span>
+      </div>
+      <div class="desc-text">You touch a creature and can end either one disease or one condition afflicting it. The condition can be blinded, deafened, paralyzed, or poisoned.</div>
+    </div>
+  </details>
+
+  <details class="avail">
+    <summary>
+      <span class="sname">Locate Animals or Plants</span>
+      <span class="badges"><span class="badge ritual">Ritual</span></span>
+    </summary>
+    <div class="spell-body">
+      <div class="meta">
+        <span><span class="mk">School</span> Divination</span>
+        <span><span class="mk">Time</span> 1 action</span>
+        <span><span class="mk">Range</span> Self</span>
+        <span><span class="mk">Duration</span> Instantaneous</span>
+        <span><span class="mk">Components</span> V, S, M (bit of fur from a bloodhound)</span>
+      </div>
+      <div class="desc-text">Describe or name a specific kind of beast or plant. Concentrating on the voice of nature, you learn the direction and distance to the closest creature or plant of that kind within 5 miles, if any are present.</div>
+    </div>
+  </details>
+
+  <details class="avail">
+    <summary>
+      <span class="sname">Locate Object</span>
+      <span class="badges"><span class="badge ritual">Ritual</span><span class="badge conc">Conc</span></span>
+    </summary>
+    <div class="spell-body">
+      <div class="meta">
+        <span><span class="mk">School</span> Divination</span>
+        <span><span class="mk">Time</span> 1 action</span>
+        <span><span class="mk">Range</span> Self</span>
+        <span><span class="mk">Duration</span> Conc, 10 min</span>
+        <span><span class="mk">Components</span> V, S, M (forked twig)</span>
+      </div>
+      <div class="desc-text">Describe or name an object. You sense the direction to the object&rsquo;s location as long as it is within 1,000 ft. If the object is in motion, you know the direction of movement. Can be foiled by lead shielding.</div>
+    </div>
+  </details>
+
+  <details class="avail">
+    <summary>
+      <span class="sname">Moonbeam</span>
+      <span class="badges"><span class="badge conc">Conc</span><span class="badge save">Con save</span></span>
+    </summary>
+    <div class="spell-body">
+      <div class="meta">
+        <span><span class="mk">School</span> Evocation</span>
+        <span><span class="mk">Time</span> 1 action</span>
+        <span><span class="mk">Range</span> 120 ft</span>
+        <span><span class="mk">Duration</span> Conc, 1 min</span>
+        <span><span class="mk">Components</span> V, S, M (moonstone)</span>
+      </div>
+      <div class="desc-text">A silvery beam of pale light shines down in a 5-ft-radius, 40-ft-tall cylinder. Creatures in the cylinder when it appears and at the start of each of your turns make a Constitution save — fail: 2d10 radiant damage; success: half. Shapechangers have disadvantage on this save and revert to true form on fail. As a bonus action, you can move the beam up to 60 ft.</div>
+      <div class="upcast"><strong>Higher levels:</strong> +1d10 per slot level above 2nd.</div>
+    </div>
+  </details>
+
+  <details class="avail">
+    <summary>
+      <span class="sname">Pass Without Trace</span>
+      <span class="badges"><span class="badge conc">Conc</span></span>
+    </summary>
+    <div class="spell-body">
+      <div class="meta">
+        <span><span class="mk">School</span> Abjuration</span>
+        <span><span class="mk">Time</span> 1 action</span>
+        <span><span class="mk">Range</span> Self</span>
+        <span><span class="mk">Duration</span> Conc, 1 hour</span>
+        <span><span class="mk">Components</span> V, S, M (ashes from burned mistletoe)</span>
+      </div>
+      <div class="desc-text">A veil of shadows and silence radiates from you, masking you and your companions from detection. Each creature you choose within 30 ft (including you) gets a +10 bonus to Dexterity (Stealth) checks and can&rsquo;t be tracked except by magical means. A creature that receives the bonus leaves behind no tracks or other traces.</div>
+    </div>
+  </details>
+
+  <details class="avail">
+    <summary>
+      <span class="sname">Protection from Poison</span>
+    </summary>
+    <div class="spell-body">
+      <div class="meta">
+        <span><span class="mk">School</span> Abjuration</span>
+        <span><span class="mk">Time</span> 1 action</span>
+        <span><span class="mk">Range</span> Touch</span>
+        <span><span class="mk">Duration</span> 1 hour</span>
+        <span><span class="mk">Components</span> V, S</span>
+      </div>
+      <div class="desc-text">You touch a creature. If it is poisoned, you neutralize the poison. For the duration, the target has advantage on saving throws against poison and resistance to poison damage.</div>
+    </div>
+  </details>
+
+  <details class="avail">
+    <summary>
+      <span class="sname">Spike Growth</span>
+      <span class="badges"><span class="badge conc">Conc</span></span>
+    </summary>
+    <div class="spell-body">
+      <div class="meta">
+        <span><span class="mk">School</span> Transmutation</span>
+        <span><span class="mk">Time</span> 1 action</span>
+        <span><span class="mk">Range</span> 150 ft</span>
+        <span><span class="mk">Duration</span> Conc, 10 min</span>
+        <span><span class="mk">Components</span> V, S, M (seven thorns or tree bark)</span>
+      </div>
+      <div class="desc-text">The ground in a 20-ft radius centered on a point within range twists and sprouts hard spikes. The area becomes difficult terrain. Any creature moving through the area takes 2d4 piercing damage for every 5 ft it travels. The spikes are concealed by plant growth, requiring a Wisdom (Perception) vs your spell save DC to notice before entering.</div>
+    </div>
+  </details>
+
+  <details class="avail">
+    <summary>
+      <span class="sname">Warding Wind</span>
+      <span class="badges"><span class="badge conc">Conc</span></span>
+    </summary>
+    <div class="spell-body">
+      <div class="meta">
+        <span><span class="mk">School</span> Evocation</span>
+        <span><span class="mk">Time</span> 1 action</span>
+        <span><span class="mk">Range</span> Self</span>
+        <span><span class="mk">Duration</span> Conc, 10 min</span>
+        <span><span class="mk">Components</span> V</span>
+      </div>
+      <div class="desc-text">A strong wind (20 mph) blows around you in a 10-ft radius. The wind: deafens you and other creatures in the area; extinguishes unprotected flames in the area; heavily obscures the area with fog (if any); protects you from ranged weapon attacks (disadvantage on such attacks); and prevents gaseous forms and fog-based effects from entering the area.</div>
     </div>
   </details>
 

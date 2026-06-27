@@ -308,6 +308,11 @@
     .badge.react   { background: rgba(140,60,0,0.10);   color: #7a3000;         border: 1px solid #c07040; }
     .badge.ua      { background: rgba(80,20,140,0.10);  color: #4a1a7a;         border: 1px solid #9060c0; }
     .badge.save    { background: rgba(122,27,27,0.10);  color: var(--crimson);  border: 1px solid var(--crimson); }
+    .badge.prep    { background: rgba(122,27,27,0.18);  color: var(--crimson);  border: 1px solid var(--crimson); }
+
+    details.prepared { background: rgba(122,27,27,0.06); border-left: 3px solid var(--crimson); }
+    details.prepared[open] { background: rgba(122,27,27,0.11); }
+    details.prepared .sname { color: var(--crimson-dark); font-weight: 700; font-style: normal; }
 
     .spell-body {
       padding: 4px 12px 12px 22px;
@@ -652,9 +657,10 @@
     </div>
   </details>
 
-  <details class="avail">
+  <details class="prepared">
     <summary>
       <span class="sname">Cure Wounds</span>
+      <span class="badges"><span class="badge prep">Prepared</span></span>
     </summary>
     <div class="spell-body">
       <div class="meta">
@@ -721,10 +727,10 @@
     </div>
   </details>
 
-  <details class="avail">
+  <details class="prepared">
     <summary>
       <span class="sname">Entangle</span>
-      <span class="badges"><span class="badge conc">Conc</span><span class="badge save">Str save</span></span>
+      <span class="badges"><span class="badge prep">Prepared</span><span class="badge conc">Conc</span><span class="badge save">Str save</span></span>
     </summary>
     <div class="spell-body">
       <div class="meta">
@@ -738,10 +744,10 @@
     </div>
   </details>
 
-  <details class="avail">
+  <details class="prepared">
     <summary>
       <span class="sname">Faerie Fire</span>
-      <span class="badges"><span class="badge conc">Conc</span><span class="badge save">Dex save</span></span>
+      <span class="badges"><span class="badge prep">Prepared</span><span class="badge conc">Conc</span><span class="badge save">Dex save</span></span>
     </summary>
     <div class="spell-body">
       <div class="meta">
@@ -773,9 +779,10 @@
     </div>
   </details>
 
-  <details class="avail">
+  <details class="prepared">
     <summary>
       <span class="sname">Goodberry</span>
+      <span class="badges"><span class="badge prep">Prepared</span></span>
     </summary>
     <div class="spell-body">
       <div class="meta">
@@ -806,10 +813,10 @@
     </div>
   </details>
 
-  <details class="avail">
+  <details class="prepared">
     <summary>
       <span class="sname">Healing Word</span>
-      <span class="badges"><span class="badge ba">Bonus action</span></span>
+      <span class="badges"><span class="badge prep">Prepared</span><span class="badge ba">Bonus action</span></span>
     </summary>
     <div class="spell-body">
       <div class="meta">
@@ -1068,10 +1075,10 @@
     </div>
   </details>
 
-  <details class="avail">
+  <details class="prepared">
     <summary>
       <span class="sname">Locate Animals or Plants</span>
-      <span class="badges"><span class="badge ritual">Ritual</span></span>
+      <span class="badges"><span class="badge prep">Prepared</span><span class="badge ritual">Ritual</span></span>
     </summary>
     <div class="spell-body">
       <div class="meta">

@@ -460,7 +460,7 @@
 <div class="page">
 
   <div class="page-title">&#9680; Wild Shape</div>
-  <div class="page-sub">Lute &nbsp;&middot;&nbsp; Druid 2 &nbsp;&middot;&nbsp; Circle of the Moon</div>
+  <div class="page-sub">Lute &nbsp;&middot;&nbsp; Druid 3 &nbsp;&middot;&nbsp; Circle of the Moon</div>
 
   <div class="divider">
     <div class="divider-line"></div>
@@ -714,6 +714,72 @@
     </div>
   </div>
 
+  <!-- ══ BEAST: WARHORSE ══ -->
+  <div class="beast-card">
+    <div class="beast-header">
+      <span class="beast-name">Warhorse</span>
+      <span class="beast-cr">CR &frac12; &nbsp;&middot;&nbsp; Large Beast</span>
+    </div>
+    <div class="beast-rule"></div>
+
+    <div class="stat-strip">
+      <div class="stat-pill">
+        <div class="stat-pill-val highlight">19</div>
+        <div class="stat-pill-lbl">HP</div>
+      </div>
+      <div class="stat-pill">
+        <div class="stat-pill-val">11</div>
+        <div class="stat-pill-lbl">AC</div>
+      </div>
+      <div class="stat-pill">
+        <div class="stat-pill-val">60 ft</div>
+        <div class="stat-pill-lbl">Speed</div>
+      </div>
+    </div>
+
+    <div class="stat-source"><span>Green</span> = from the beast &nbsp;|&nbsp; <span class="you">Red</span> = your own stat (kept)</div>
+    <table class="stat-table">
+      <thead>
+        <tr><th>Stat</th><th>Modifier</th><th>Source</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>STR</td><td class="val from-beast">+4</td><td>Beast (18)</td></tr>
+        <tr><td>DEX</td><td class="val from-beast">+1</td><td>Beast (12)</td></tr>
+        <tr><td>CON</td><td class="val from-beast">+1</td><td>Beast (13)</td></tr>
+        <tr><td>INT</td><td class="val from-you">+1</td><td>Yours &mdash; warhorse is &minus;4!</td></tr>
+        <tr><td>WIS</td><td class="val from-you">+3</td><td>Yours &mdash; warhorse is +1</td></tr>
+        <tr><td>CHA</td><td class="val from-you">&minus;1</td><td>Yours</td></tr>
+      </tbody>
+    </table>
+
+    <div class="atk-section-title">Attack</div>
+
+    <div class="atk-block">
+      <div class="atk-name-row">
+        <span class="atk-name">Hooves</span>
+        <span class="atk-tag">Melee &nbsp;&middot;&nbsp; Reach 5 ft &nbsp;&middot;&nbsp; One target</span>
+      </div>
+      <div class="atk-dice-row">
+        <div class="atk-dice-block">
+          <div class="atk-dice-num">+6</div>
+          <div class="atk-dice-lbl">To Hit</div>
+        </div>
+        <div class="atk-dice-block">
+          <div class="atk-dice-num">2d6+4</div>
+          <div class="atk-dice-lbl">Bludgeoning</div>
+        </div>
+      </div>
+      <div class="atk-explain">
+        Roll a d20 and add <strong>+6</strong>. If it meets or beats their AC, roll <strong>2 six-sided dice</strong>, add them together, then add <strong>4</strong>. That&rsquo;s your damage. Average damage is 11.
+      </div>
+    </div>
+
+    <div class="special-title">Special Ability</div>
+    <div class="special-item">
+      <strong>Trampling Charge</strong> — If you move at least <strong>20 ft straight</strong> toward a creature and hit it with a Hooves attack on the same turn, the target must succeed on a <strong>DC 14 Strength</strong> saving throw or be knocked prone. If it&rsquo;s prone, you can use your <strong>bonus action</strong> to make one more Hooves attack against it.
+    </div>
+  </div>
+
   <!-- ── QUICK COMPARE ── -->
   <div class="divider" style="margin-top:0.75rem;">
     <div class="divider-line"></div>
@@ -735,6 +801,13 @@
       <div>
         <span class="rule-label">Ape</span>
         Best when you need <strong>ranged pressure or high single-target damage</strong>. Two attacks per round, can throw rocks from safety, and can climb to unexpected positions.
+      </div>
+    </div>
+    <div class="rule-item">
+      <span class="rule-icon">&#9650;</span>
+      <div>
+        <span class="rule-label">Warhorse</span>
+        Best when you need <strong>speed and a burst charge</strong>. 60 ft move lets you trigger Trampling Charge for a bonus-action second Hooves hit, and 2d6+4 is your hardest single swing. Lowest HP (19) and AC (11) of the three, so get in, hit hard, and revert out.
       </div>
     </div>
   </div>
